@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_struct.c                                      :+:      :+:    :+:   */
+/*   print_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/05 17:40:51 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/06/05 17:40:53 by iporsenn         ###   ########.fr       */
+/*   Created: 2018/06/12 14:47:40 by iporsenn          #+#    #+#             */
+/*   Updated: 2018/06/12 14:47:41 by iporsenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf_3d.h"
 
-void		init_global(t_global *global)
+void	print_parse(t_global *global)
 {
-	global->name = NULL;
-	global->wall = NULL;
-	global->width = 0;
-	global->height = 0;
+	int i;
+	int j;
+
+	i = -1;
+	while (++i < global->width)
+	{
+		j = -1;
+		while (++j < global->height)
+		{
+			ft_putnbr(global->wall[i][j]);
+			ft_putchar(' ');
+		}
+		ft_putchar('\n');
+	}
+	ft_putchar('\n');
 }

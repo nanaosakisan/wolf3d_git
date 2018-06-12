@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/libft.h"
+#include <stdio.h>
 
 static	int			ft_count_word(const char *s, char c)
 {
@@ -85,7 +86,6 @@ static	char		**ft_fill_array(char **array, const char *s, char c)
 char				**ft_strsplit(const char *s, char c)
 {
 	char	**array;
-	int i;
 
 	array = NULL;
 	if (!s || !c)
@@ -93,6 +93,5 @@ char				**ft_strsplit(const char *s, char c)
 	if (!(array = ft_malloc_array(s, c)))
 		return (NULL);
 	ft_fill_array(array, s, c);
-	i = -1;
 	return (array);
 }

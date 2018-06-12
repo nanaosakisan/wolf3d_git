@@ -18,13 +18,14 @@ int		main(int ac, char **av)
 	int			fd;
 
 	if (ac != 2)
-		ft_error("usage: ./fdf filename");
+		error("usage: ./fdf filename");
 	else
 	{
 		if ((fd = open(av[1], O_RDONLY)) == -1)
 			error("open() failed");
 		global.name = av[1];
-		parsing(&global, fd);
+		lauchn_parse(&global, fd, av);
+		print_parse(&global);
 	}
 	return (0);
 }

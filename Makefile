@@ -13,10 +13,11 @@
 NAME = wolf3d
 
 SRC_PATH = src/
-SRC_NAME =	draw_segment.c	\
+SRC_NAME =	aux.c			\
 			init_struct.c	\
 			main.c			\
-			parsing.c
+			parsing.c		\
+			print_parse.c
 
 SRC =  $(addprefix $(SRC_PATH), $(SRC_NAME))
 

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "../includes/wolf_3d.h"
 
 void			mlx_pixel_put_to_image(t_fdf *global, int x, int y, int color)
 {
