@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   aux.c                                              :+:      :+:    :+:   */
+/*   draw_square.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/12 17:27:40 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/06/12 17:27:42 by iporsenn         ###   ########.fr       */
+/*   Created: 2018/06/19 17:19:39 by iporsenn          #+#    #+#             */
+/*   Updated: 2018/06/19 17:19:41 by iporsenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf_3d.h"
 
-void	free_array(char **array, int len_array)
+void	draw_square(float *height, float *width, t_global *global)
 {
 	int i;
+	int j;
 
 	i = -1;
-	while (++i > len_array)
-		ft_strdel(&array[i]);
-	free(array);
-}
-
-void	free_parse(int **wall, int len_array)
-{
-	int i;
-
-	i = -1;
-	ft_putnbr_endl(len_array);
-	while (++i < len_array)
-		ft_memdel((void**)&wall[i]);
-	free((void*)&wall);
+	while (++i < global->height)
+	{
+		j = -1;
+		while (++j < global->width)
+		{
+			draw_segment(height, width, global);
+		}
+	}
 }

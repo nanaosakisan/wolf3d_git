@@ -12,10 +12,34 @@
 
 #include "../includes/wolf_3d.h"
 
-void		init_global(t_global *global)
+// static void 	init_map(t_map *map)
+// {
+// 	map->p_win = NULL;
+// 	map->p_img = NULL;
+// 	map->img_addr = NULL;
+// 	map->bpp = 0;
+// 	map->size = 0;
+// 	map->endian = 0;
+// }
+
+static void		init_img(t_img *img)
 {
-	global->name = NULL;
+	img->p_mlx = NULL;
+	img->p_win = NULL;
+	img->p_img = NULL;
+	img->img_addr = NULL;
+	img->bpp = 0;
+	img->size = 0;
+	img->endian = 0;
+}
+
+void			init_global(t_global *global)
+{
 	global->wall = NULL;
 	global->width = 0;
 	global->height = 0;
+	global->x_init = 0;
+	global->y_init = 0;
+	global->color = 0xFFFFFF;
+	init_img(&global->img);
 }

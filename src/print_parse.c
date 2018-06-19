@@ -18,15 +18,15 @@ void	print_parse(t_global *global)
 	int j;
 
 	i = -1;
-	while (++i < global->width)
+	while (++i < global->height)
 	{
 		j = -1;
-		while (++j < global->height)
+		while (++j < global->width)
 		{
 			ft_putnbr(global->wall[i][j]);
 			ft_putchar(' ');
 		}
 		ft_putchar('\n');
 	}
-	ft_putchar('\n');
+	printf("x_init = %d, y_init = %d\n", global->x_init, global->y_init);
 }

@@ -14,6 +14,9 @@ NAME = wolf3d
 
 SRC_PATH = src/
 SRC_NAME =	aux.c			\
+			check_map.c		\
+			draw_segment.c	\
+			draw_square.c	\
 			init_struct.c	\
 			main.c			\
 			parsing.c		\
@@ -32,7 +35,7 @@ HEADER_PATH = minilibx_macos/
 HEADER_NAME = libmlx.a
 HEADER = $(addprefix $(HEADER_PATH), $(HEADER_NAME))
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 FLAGS_LIBX = -lmlx -framework OpenGL -framework AppKit -lpthread -D_REENTRANT
 
 .PHONY: all, build, creadir, clean, fclean, rebuild, re

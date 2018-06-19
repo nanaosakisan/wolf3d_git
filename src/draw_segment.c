@@ -12,7 +12,8 @@
 
 #include "../includes/wolf_3d.h"
 
-void			mlx_pixel_put_to_image(t_fdf *global, int x, int y, int color)
+void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
+																	int color)
 {
 	int i;
 
@@ -37,7 +38,8 @@ void			mlx_pixel_put_to_image(t_fdf *global, int x, int y, int color)
 	}
 }
 
-static void		draw_horizon(float *coord, int *diff, int *inc, t_fdf *global)
+static void		draw_horizon(float *coord, int *diff, int *inc, \
+															t_global *global)
 {
 	int		i;
 	int		cumul;
@@ -56,11 +58,12 @@ static void		draw_horizon(float *coord, int *diff, int *inc, t_fdf *global)
 		if ((coord[1] > 0 && coord[1] < WIDTH) && (coord[0] > 0 && coord[0] < \
 																		HEIGHT))
 			mlx_pixel_put_to_image(global, coord[1], coord[0], \
-														global->coords.color);
+														global->color);
 	}
 }
 
-static void		draw_vertical(float *coord, int *diff, int *inc, t_fdf *global)
+static void		draw_vertical(float *coord, int *diff, int *inc, \
+															t_global *global)
 {
 	int i;
 	int cumul;
@@ -79,11 +82,11 @@ static void		draw_vertical(float *coord, int *diff, int *inc, t_fdf *global)
 		if ((coord[1] > 0 && coord[1] < WIDTH) && (coord[0] > 0 && coord[0] < \
 																		HEIGHT))
 			mlx_pixel_put_to_image(global, coord[1], coord[0], \
-														global->coords.color);
+														global->color);
 	}
 }
 
-void			draw_segment(float *coord_src, float *coord_dst, t_fdf *global)
+void			draw_segment(float *coord_src, float *coord_dst, t_global *global)
 {
 	int diff[2];
 	int inc[2];
@@ -97,7 +100,7 @@ void			draw_segment(float *coord_src, float *coord_dst, t_fdf *global)
 	if ((coord_src[1] > 0 && coord_src[1] < WIDTH) && (coord_src[0] > 0 && \
 														coord_src[0] < HEIGHT))
 		mlx_pixel_put_to_image(global, coord_src[1], coord_src[0], \
-														global->coords.color);
+														global->color);
 	if (diff[1] > diff[0])
 		draw_horizon(coord_src, diff, inc, global);
 	else
