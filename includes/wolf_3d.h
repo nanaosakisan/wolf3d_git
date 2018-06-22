@@ -23,7 +23,7 @@
 
 typedef	struct s_img
 {
-	void *p_mlx;
+	void 	*p_mlx;
 	void	*p_win;
 	void	*p_img;
 	char	*img_addr;
@@ -32,14 +32,8 @@ typedef	struct s_img
 	int		endian;
 }				t_img;
 
-// typedef	struct	s_map
-// {
-//
-// }				t_map;
-
 typedef struct	s_global
 {
-	// t_map	map;
 	t_img	img;
 	char	*name;
 	int		**wall;
@@ -48,15 +42,22 @@ typedef struct	s_global
 	int		x_init;
 	int		y_init;
 	int		color;
+	int		(*key_func[1])(struct s_global*, int);
+	int		len_key;
 }				t_global;
 
 int				check_map(char *line, int cpt, t_global *global, int *tmp);
-void			draw_segment(float *coord_src, float *coord_dst, t_global *global);
-void			draw_square(float *height, float *width, t_global *global);
+int				close_map(t_global *global, int key);
+int				deal_key(int key, t_global *global);
+void			draw_segment(float *coord_src, float *coord_dst, \
+															t_global *global);
+void			draw_square(int x, int y, t_global *global);
 void			free_array(char **array, int len_array);
 void			free_parse(int **wall, int len_array);
 void			init_global(t_global *global);
 int				main(int ac, char **av);
+void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
+																	int color);
 int				launch_parse(t_global *global, int fd, char **av);
 void			print_parse(t_global *global);
 

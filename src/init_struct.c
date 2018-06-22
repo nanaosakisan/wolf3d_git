@@ -41,5 +41,7 @@ void			init_global(t_global *global)
 	global->x_init = 0;
 	global->y_init = 0;
 	global->color = 0xFFFFFF;
+	global->key_func[0] = &close_map;
+	global->len_key = 1;
 	init_img(&global->img);
 }

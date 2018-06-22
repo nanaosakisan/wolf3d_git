@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   aux.c                                              :+:      :+:    :+:   */
+/*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/12 17:27:40 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/06/12 17:27:42 by iporsenn         ###   ########.fr       */
+/*   Created: 2018/06/22 13:57:24 by iporsenn          #+#    #+#             */
+/*   Updated: 2018/06/22 13:57:26 by iporsenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf_3d.h"
 
-void	free_array(char **array, int len_array)
+int		close_map(t_global *global, int key)
 {
-	int i;
-
-	i = -1;
-	while (++i > len_array)
-		ft_strdel(&array[i]);
-	free(array);
+	if (key != 53)
+		return (0);
+	mlx_destroy_image(global->img.p_mlx, global->img.p_img);
+	free_parse(global->wall, global->height);
+	global->img.p_mlx = NULL;
+	global->img.p_win = NULL;
+	global->img.p_img = NULL;
+	global->img.img_addr = NULL;
+	exit(EXIT_SUCCESS);
 }
 
-void	free_parse(int **wall, int len_array)
+int		deal_key(int key, t_global *global)
 {
 	int i;
 
-	i = -1;
-	ft_putnbr_endl(len_array);
-	while (++i < len_array)
-		ft_memdel((void**)&wall[i]);
-	// free((void*)&wall);
+	i = 0;
+	while ((i < global->len_key) && !global->key_func[i](global, key))
+		i++;
+	return (0);
 }

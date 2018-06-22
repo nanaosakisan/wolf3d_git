@@ -18,6 +18,7 @@ SRC_NAME =	aux.c			\
 			draw_segment.c	\
 			draw_square.c	\
 			init_struct.c	\
+			key_hook.c		\
 			main.c			\
 			parsing.c		\
 			print_parse.c
