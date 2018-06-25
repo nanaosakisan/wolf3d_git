@@ -74,7 +74,7 @@ SRC_NAME =	error.c 					\
 			ft_strtrim.c				\
 			ft_toupper.c				\
 			ft_tolower.c				\
-			get_next_line.c 			
+			get_next_line.c
 
 SRC =  $(addprefix $(SRC_PATH), $(SRC_NAME))
 
@@ -90,9 +90,9 @@ FLAGS = -Wall -Werror -Wextra
 all: $(NAME)
 
 $(NAME):	creadir $(OBJ)
+	@echo "\033[32mLibft built\033[0m"
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	@echo "\033[32mBuilding libft\033[0m"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@gcc $(FLAGS) -o $@ -c $<
@@ -105,6 +105,6 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "\033[31mCleaning libft\033[0m"
+	@echo "\033[31mLibft cleaned\033[0m"
 
 re: fclean all

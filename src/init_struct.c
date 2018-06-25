@@ -12,16 +12,6 @@
 
 #include "../includes/wolf_3d.h"
 
-// static void 	init_map(t_map *map)
-// {
-// 	map->p_win = NULL;
-// 	map->p_img = NULL;
-// 	map->img_addr = NULL;
-// 	map->bpp = 0;
-// 	map->size = 0;
-// 	map->endian = 0;
-// }
-
 static void		init_img(t_img *img)
 {
 	img->p_mlx = NULL;
@@ -35,6 +25,9 @@ static void		init_img(t_img *img)
 
 void			init_global(t_global *global)
 {
+	int i;
+
+	i = -1;
 	global->wall = NULL;
 	global->width = 0;
 	global->height = 0;
@@ -43,5 +36,7 @@ void			init_global(t_global *global)
 	global->color = 0xFFFFFF;
 	global->key_func[0] = &close_map;
 	global->len_key = 1;
+	while (++i < THREAD)
+		global->thread[i] = 0;
 	init_img(&global->img);
 }

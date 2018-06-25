@@ -12,18 +12,32 @@
 
 #include "../includes/wolf_3d.h"
 
-void	draw_square(int x, int y, t_global *global)
+void	draw_white_square(int x, int y, t_global *global)
 {
 	int i;
-	int j;
+	int len;
 
-	i = -1;
-	while (++i < global->width && i < x)
+	len = x + SQUARE;
+	while (x < WIDTH && x <= len)
 	{
-		j = -1;
-		while (++j < global->height && j < y)
-		{
-			mlx_pixel_put_to_image(global, i, j, 0xFFFFFF);
-		}
+		i = y;
+		while (++i <= HEIGHT && i <= y + SQUARE)
+			mlx_pixel_put_to_image(global, x, i, 0xFFFFFF);
+		x++;
+	}
+}
+
+void	draw_black_square(int x, int y, t_global *global)
+{
+	int i;
+	int len;
+
+	len = x + SQUARE;
+	while (x < WIDTH && x < len)
+	{
+		i = y;
+		while (++i < HEIGHT && i <= y + SQUARE)
+			mlx_pixel_put_to_image(global, x, i, 0x000000);
+		x++;
 	}
 }

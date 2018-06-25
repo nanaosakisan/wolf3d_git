@@ -20,6 +20,7 @@ SRC_NAME =	aux.c			\
 			init_struct.c	\
 			key_hook.c		\
 			main.c			\
+			mini_map.c		\
 			parsing.c		\
 			print_parse.c
 
@@ -41,37 +42,33 @@ FLAGS_LIBX = -lmlx -framework OpenGL -framework AppKit -lpthread -D_REENTRANT
 
 .PHONY: all, build, creadir, clean, fclean, rebuild, re
 
-all: $(NAME)
+all: lib $(NAME)
 
 $(NAME):	creadir $(OBJ)
-	@make -C libft
 	@gcc $(FLAGS) $(FLAGS_LIBX) $(SRC) ./libft/libft.a $(HEADER) -o $(NAME)
-	@echo "\033[32mBuilding exe\033[0m"
+	@echo "\033[32mExe built\033[0m"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@gcc $(FLAGS) -o $@ -c $<
 
 build : creadir
 	@gcc $(FLAGS) $(FLAGS_LIBX) $(SRC) ./libft/libft.a $(HEADER) -o $(NAME)
-	@echo "\033[32mBuilding exe\033[0m"
+	@echo "\033[32mExe built\033[0m"
 
 creadir:
 	@mkdir -p $(OBJ_PATH)
 
+lib:
+	@make -C libft
+
 clean:
 	@make clean -C libft
 	@rm -rf $(OBJ_PATH)
-	@echo "\033[31mCleaning .o\033[0m"
-
-rebuild:
-	@rm -rf $(OBJ_PATH)
-	@echo "\033[31mCleaning .o\033[0m"
-	@gcc $(FLAGS) $(FLAGS_LIBX) $(SRC) ./libft/libft.a $(HEADER) -o $(NAME)
-	@echo "\033[32mBuilding exe\033[0m"
+	@echo "\033[31m.o cleaned\033[0m"
 
 fclean: clean
 	@make fclean -C libft
 	@rm -f $(NAME)
-	@echo "\033[31mCleaning all\033[0m"
+	@echo "\033[31mAll cleaned\033[0m"
 
 re: fclean all

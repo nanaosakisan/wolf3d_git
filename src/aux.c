@@ -27,7 +27,6 @@ void	free_parse(int **wall, int len_array)
 	int i;
 
 	i = -1;
-	ft_putnbr_endl(len_array);
 	while (++i < len_array)
 		ft_memdel((void**)&wall[i]);
 	// free((void*)&wall);

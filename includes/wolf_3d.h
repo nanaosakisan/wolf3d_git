@@ -17,9 +17,12 @@
 # include "../minilibx_macos/mlx.h"
 # include <math.h>
 # include <stdio.h>
+# include <pthread.h>
 
 # define WIDTH 600
 # define HEIGHT 600
+# define THREAD 10
+# define SQUARE 16
 
 typedef	struct s_img
 {
@@ -44,6 +47,7 @@ typedef struct	s_global
 	int		color;
 	int		(*key_func[1])(struct s_global*, int);
 	int		len_key;
+	pthread_t	thread[THREAD];
 }				t_global;
 
 int				check_map(char *line, int cpt, t_global *global, int *tmp);
@@ -51,13 +55,15 @@ int				close_map(t_global *global, int key);
 int				deal_key(int key, t_global *global);
 void			draw_segment(float *coord_src, float *coord_dst, \
 															t_global *global);
-void			draw_square(int x, int y, t_global *global);
+void			draw_white_square(int x, int y, t_global *global);
+void			draw_black_square(int x, int y, t_global *global);
 void			free_array(char **array, int len_array);
 void			free_parse(int **wall, int len_array);
 void			init_global(t_global *global);
 int				main(int ac, char **av);
 void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
 																	int color);
+void			launch_mini_map(t_global *global);
 int				launch_parse(t_global *global, int fd, char **av);
 void			print_parse(t_global *global);
 
