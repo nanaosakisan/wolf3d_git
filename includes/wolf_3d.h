@@ -18,6 +18,7 @@
 # include <math.h>
 # include <stdio.h>
 # include <pthread.h>
+# include "../SDL2-2.0.8/include/SDL.h"
 
 # define WIDTH 600
 # define HEIGHT 600

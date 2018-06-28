@@ -42,7 +42,7 @@ FLAGS_LIBX = -lmlx -framework OpenGL -framework AppKit -lpthread -D_REENTRANT
 
 .PHONY: all, build, creadir, clean, fclean, rebuild, re
 
-all: lib $(NAME)
+all: lib sdl $(NAME)
 
 $(NAME):	creadir $(OBJ)
 	@gcc $(FLAGS) $(FLAGS_LIBX) $(SRC) ./libft/libft.a $(HEADER) -o $(NAME)
@@ -61,6 +61,13 @@ creadir:
 lib:
 	@make -C libft
 
+sdl :
+	if [ ! -e "SDL2-2.0.8/include/SDL.h"]
+	then
+		curl -L https://libsdl.org/release/SDL2-2.0.8.tar.gz | tar xz
+		cd SDL2-2.0.8; ./configure
+	fi
+
 clean:
 	@make clean -C libft
 	@rm -rf $(OBJ_PATH)
@@ -69,6 +76,7 @@ clean:
 fclean: clean
 	@make fclean -C libft
 	@rm -f $(NAME)
+	@rm -rf SDL2-2.0.8
 	@echo "\033[31mAll cleaned\033[0m"
 
 re: fclean all

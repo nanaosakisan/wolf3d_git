@@ -31,50 +31,48 @@ void	draw_map(t_global *global)
 	}
 }
 
+static int		get_thread_id(pthread_t id, pthread_t *thread)
+{
+	int i;
 
-// static int		get_thread_id(pthread_t id, pthread_t *thread)
-// {
-// 	int i;
-//
-// 	i = 0;
-// 	while (i < THREAD && !pthread_equal(id, thread[i]))
-// 		i++;
-// 	return (i);
-// }
-//
-// static void		*launch_thread(void *data)
-// {
-// 	int			start;
-// 	int			end;
-// 	int			padding;
-// 	int			i;
-// 	t_global	*global;
-//
-// 	global = (t_global *)data;
-// 	padding = WIDTH / THREAD;
-// 	start = get_thread_id(pthread_self(), global->thread) * padding;
-// 	end = start + padding + 1;
-// 	while (++start < WIDTH && start < end && start < SQUARE)
-// 	{
-// 		i = -1;
-// 		while (++i < HEIGHT && i < SQUARE)
-// 			draw_map(global);
-// 	}
-// 	pthread_exit(NULL);
-// 	return (NULL);
-// }
+	i = 0;
+	while (i < THREAD && !pthread_equal(id, thread[i]))
+		i++;
+	return (i);
+}
+
+static void		*launch_thread(void *data)
+{
+	int			start;
+	int			end;
+	int			padding;
+	int			i;
+	t_global	*global;
+
+	global = (t_global *)data;
+	padding = WIDTH / THREAD;
+	start = get_thread_id(pthread_self(), global->thread) * padding;
+	end = start + padding + 1;
+	while (++start < WIDTH && start < end && start < SQUARE)
+	{
+		i = -1;
+		while (++i < HEIGHT && i < SQUARE)
+			draw_map(global);
+	}
+	pthread_exit(NULL);
+	return (NULL);
+}
 
 void	launch_mini_map(t_global *global)
 {
-	// int i;
-    //
-	// i = -1;
-	// while (++i < THREAD)
-	// 	pthread_create(&global->thread[i], NULL, launch_thread, global);
-	// i = -1;
-	// while (++i < THREAD)
-	// 	pthread_join(global->thread[i], NULL);
-	draw_map(global);
+	int i;
+
+	i = -1;
+	while (++i < THREAD)
+		pthread_create(&global->thread[i], NULL, launch_thread, global);
+	i = -1;
+	while (++i < THREAD)
+		pthread_join(global->thread[i], NULL);
 	mlx_put_image_to_window(global->img.p_mlx, global->img.p_win, \
 													global->img.p_img, 0, 0);
 }
