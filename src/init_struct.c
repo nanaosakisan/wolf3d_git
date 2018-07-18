@@ -23,6 +23,15 @@ static void		init_img(t_img *img)
 	img->endian = 0;
 }
 
+static void		init_map(t_map *map)
+{
+	map->p_img = NULL;
+	map->img_addr = NULL;
+	map->bpp = 0;
+	map->size = 0;
+	map->endian = 0;
+}
+
 void			init_global(t_global *global)
 {
 	int i;
@@ -39,4 +48,5 @@ void			init_global(t_global *global)
 	while (++i < THREAD)
 		global->thread[i] = 0;
 	init_img(&global->img);
+	init_map(&global->map);
 }

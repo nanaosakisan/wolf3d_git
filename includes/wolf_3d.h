@@ -18,10 +18,12 @@
 # include <math.h>
 # include <stdio.h>
 # include <pthread.h>
-# include "../SDL2-2.0.8/include/SDL.h"
+// # include "../SDL2-2.0.8/include/SDL.h"
 
 # define WIDTH 600
 # define HEIGHT 600
+# define WIDTH_UI 100
+# define HEIGHT_UI 100
 # define THREAD 10
 # define SQUARE 16
 
@@ -36,9 +38,27 @@ typedef	struct s_img
 	int		endian;
 }				t_img;
 
+typedef struct	s_map
+{
+	void	*p_img;
+	char	*img_addr;
+	int		bpp;
+	int		size;
+	int		endian;
+}				t_map;
+
+typedef struct	s_player
+{
+	int		x;
+	int 	y;
+	int		height;
+	int		angle;
+}				t_player;
+
 typedef struct	s_global
 {
 	t_img	img;
+	t_map	map;
 	char	*name;
 	int		**wall;
 	int		width;

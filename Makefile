@@ -37,10 +37,20 @@ HEADER_PATH = minilibx_macos/
 HEADER_NAME = libmlx.a
 HEADER = $(addprefix $(HEADER_PATH), $(HEADER_NAME))
 
+# HEADER_PATH = SDL2-2.0.8/build/.libs/
+# HEADER_NAME =	libSDL2.a		\
+# 				libSDL2main.a	\
+# 				libSDL2_test.a
+# HEADER = $(addprefix $(HEADER_PATH), $(HEADER_NAME))
+
 FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 FLAGS_LIBX = -lmlx -framework OpenGL -framework AppKit -lpthread -D_REENTRANT
 
-SDL = ./SDL2-2.0.8
+
+# FRMWK_DIR = ./SDL2-2.0.8
+# FLAGS_SDL = -L/usr/local/lib -lSDL2
+#
+# SDL = ./SDL2-2.0.8
 
 .PHONY: all, build, creadir, clean, fclean, rebuild, re
 
@@ -50,10 +60,10 @@ $(NAME):	creadir $(OBJ)
 	@gcc $(FLAGS) $(FLAGS_LIBX) $(SRC) ./libft/libft.a $(HEADER) -o $(NAME)
 	@echo "\033[32mExe built\033[0m"
 
-$(SDL):
-	@curl -L https://libsdl.org/release/SDL2-2.0.8.tar.gz | tar xz
-	@cd SDL2-2.0.8; ./configure
-	@echo "\033[32mSDL installed\033[0m"
+# $(SDL):
+# 	curl -L https://libsdl.org/release/SDL2-2.0.8.tar.gz | tar xz
+# 	cd SDL2-2.0.8; ./configure
+# 	echo "\033[32mSDL installed\033[0m"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@gcc $(FLAGS) -o $@ -c $<
@@ -76,7 +86,6 @@ clean:
 fclean: clean
 	@make fclean -C libft
 	@rm -f $(NAME)
-	@rm -rf SDL2-2.0.8
 	@echo "\033[31mAll cleaned\033[0m"
 
 re: fclean all

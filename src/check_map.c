@@ -65,8 +65,8 @@ static int	check_number(char *line, int cpt, t_global *global, int *tmp)
 		{
 			if (*tmp == 0)
 			{
-				global->x_init = i / 2;
-				global->y_init = cpt;
+				global->player.x = i / 2;
+				global->player.y = cpt;
 			}
 			(*tmp)++;
 		}
