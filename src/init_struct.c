@@ -12,6 +12,16 @@
 
 #include "../includes/wolf_3d.h"
 
+static void		init_player(t_player *player)
+{
+	player->pos_x = 0;
+	player->pos_y = 0;
+	player->dir_x = -1;
+	player->dir_y = 0;
+	player->plane_x = 0;
+	player->plane_y = 0.66;
+}
+
 static void		init_img(t_img *img)
 {
 	img->p_mlx = NULL;
@@ -42,6 +52,8 @@ void			init_global(t_global *global)
 	global->height = 0;
 	global->x_init = 0;
 	global->y_init = 0;
+	global->time = 0;
+	global->old_time = 0;
 	global->color = 0xFFFFFF;
 	global->key_func[0] = &close_map;
 	global->len_key = 1;
@@ -49,4 +61,5 @@ void			init_global(t_global *global)
 		global->thread[i] = 0;
 	init_img(&global->img);
 	init_map(&global->map);
+	init_player(&global->player);
 }

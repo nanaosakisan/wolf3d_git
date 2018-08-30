@@ -28,5 +28,5 @@ void	print_parse(t_global *global)
 		}
 		ft_putchar('\n');
 	}
-	printf("x_init = %d, y_init = %d\n", global->player.x, global->player.y);
+	printf("x_init = %Lf, y_init = %Lf\n", global->player.pos_x, global->player.pos_y);
 }

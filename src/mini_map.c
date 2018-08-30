@@ -23,7 +23,7 @@ void	draw_map(t_global *global)
 		j = -1;
 		while (++j < global->height)
 		{
-			if (global->wall[j][i] == 1)
+			if (global->wall[j][i] > 0 && global->wall[j][i] <= 9)
 				draw_white_square(i * SQUARE, j * SQUARE, global);
 			else
 				draw_black_square(i * SQUARE, j * SQUARE, global);

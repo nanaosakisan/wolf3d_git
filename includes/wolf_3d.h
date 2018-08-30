@@ -20,10 +20,10 @@
 # include <pthread.h>
 // # include "../SDL2-2.0.8/include/SDL.h"
 
-# define WIDTH 600
-# define HEIGHT 600
-# define WIDTH_UI 100
-# define HEIGHT_UI 100
+# define WIDTH 512
+# define HEIGHT 384
+# define WIDTH_UI 50
+# define HEIGHT_UI 50
 # define THREAD 10
 # define SQUARE 16
 
@@ -49,25 +49,30 @@ typedef struct	s_map
 
 typedef struct	s_player
 {
-	int		x;
-	int 	y;
-	int		height;
-	int		angle;
+	long double		pos_x;
+	long double 	pos_y;
+	long double		dir_x;
+	long double		dir_y;
+	long double 	plane_x;
+	long double		plane_y;
 }				t_player;
 
 typedef struct	s_global
 {
-	t_img	img;
-	t_map	map;
-	char	*name;
-	int		**wall;
-	int		width;
-	int		height;
-	int		x_init;
-	int		y_init;
-	int		color;
-	int		(*key_func[1])(struct s_global*, int);
-	int		len_key;
+	t_img		img;
+	t_map		map;
+	t_player	player;
+	char		*name;
+	int			**wall;
+	int			width;
+	int			height;
+	int			x_init;
+	int			y_init;
+	long		time;
+	long		old_time;
+	int			color;
+	int			(*key_func[1])(struct s_global*, int);
+	int			len_key;
 	pthread_t	thread[THREAD];
 }				t_global;
 

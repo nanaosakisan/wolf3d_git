@@ -65,12 +65,12 @@ static int	check_number(char *line, int cpt, t_global *global, int *tmp)
 		{
 			if (*tmp == 0)
 			{
-				global->player.x = i / 2;
-				global->player.y = cpt;
+				global->player.pos_x = i / 2;
+				global->player.pos_y = cpt;
 			}
 			(*tmp)++;
 		}
-		if (line[i] != '0' && line[i] != '1' && line[i] != ' ')
+		if ((line[i] < '0' || line[i] > '9') && line[i] != ' ')
 			return (0);
 	}
 	return (1);
