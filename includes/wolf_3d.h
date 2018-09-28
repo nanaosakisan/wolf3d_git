@@ -24,7 +24,7 @@
 # define HEIGHT 384
 # define WIDTH_UI 50
 # define HEIGHT_UI 50
-# define THREAD 10
+# define THREAD 8
 # define SQUARE 16
 
 typedef	struct s_img
@@ -92,5 +92,6 @@ void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
 void			launch_mini_map(t_global *global);
 int				launch_parse(t_global *global, int fd, char **av);
 void			print_parse(t_global *global);
+void			raycast_loop(t_global *global);
 
 #endif

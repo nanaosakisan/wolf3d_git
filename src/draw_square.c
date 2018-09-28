@@ -15,13 +15,15 @@
 void	draw_white_square(int x, int y, t_global *global)
 {
 	int i;
-	int len;
+	int len_x;
+	int	len_y;
 
-	len = x + SQUARE;
-	while (x < WIDTH && x <= len)
+	len_x = x + SQUARE;
+	len_y = y + SQUARE;
+	while (x < WIDTH && x <= len_x)
 	{
 		i = y;
-		while (++i <= HEIGHT && i <= y + SQUARE)
+		while (++i <= HEIGHT && i <= len_y)
 			mlx_pixel_put_to_image(global, x, i, 0xFFFFFF);
 		x++;
 	}
