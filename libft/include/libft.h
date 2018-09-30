@@ -62,6 +62,7 @@ void				ft_putnbr_fd(int n, int fd);
 void				ft_putnbr_endl(int n);
 void				ft_putstr(const char *s);
 void				ft_putstr_fd(const char *s, int fd);
+int					*ft_splitoa(char *str, char c);
 char				*ft_strcat(char *s1, const char *s2);
 char				*ft_strncat(char *s1, const char *s2, size_t n);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
@@ -89,6 +90,7 @@ char				*ft_strnstr(const char *haystack, const char *needle,
 								size_t len);
 char				*ft_strsub(const char *s, unsigned int start, size_t len);
 char				*ft_strtrim(const char *s);
+size_t				ft_tablen(char **tab);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 int					get_next_line(const int fd, char **line);

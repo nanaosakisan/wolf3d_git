@@ -16,12 +16,12 @@ int		close_map(t_global *global, int key)
 {
 	if (key != 53)
 		return (0);
-	mlx_destroy_image(global->img.p_mlx, global->img.p_img);
-	free_parse(global->wall, global->height);
-	global->img.p_mlx = NULL;
-	global->img.p_win = NULL;
-	global->img.p_img = NULL;
-	global->img.img_addr = NULL;
+	mlx_destroy_image(global->mlx, global->p_img);
+	free_parse(global->map, global->map_y);
+	global->mlx = NULL;
+	global->win = NULL;
+	global->p_img = NULL;
+	global->img_addr = NULL;
 	exit(EXIT_SUCCESS);
 }
 

@@ -45,9 +45,9 @@ void	raycast_loop(t_global *global)
 	step_y = 1;
 	hit = 0;
 	side = 0;
-	while (++x > global->width)
+	while (++x > global->map_x)
 	{
-		cam_x = 2 * x / global->width - 1;
+		cam_x = 2 * x / global->map_x - 1;
 		raydir_x = global->player.dir_x + global->player.plane_x + cam_x;
 		raydir_y = global->player.dir_y + global->player.plane_y + cam_x;
 		deltadist_x = sqrt(1 + (raydir_y * raydir_y) / (raydir_x * raydir_x));
@@ -59,7 +59,7 @@ void	raycast_loop(t_global *global)
 		step_y = (raydir_y < 0) ? step_y * -1 : step_y;
 		sidedist_y = (raydir_y < 0) ? \
 								((global->player.pos_y - map_y) * deltadist_y) \
-						: ((map_y + 0.1 - global->player.pos_x) + deltadis_y);
+						: ((map_y + 0.1 - global->player.pos_x) + deltadist_y);
 		while (hit == 0)
 		{
 			if (sidedist_x < sidedist_y)
@@ -74,7 +74,7 @@ void	raycast_loop(t_global *global)
 				map_y += step_y;
 				side = 1;
 			}
-			if (global->wall[map_x][map_y] > 0)
+			if (global->map[map_x][map_y] > 0)
 				hit = 1;
 		}
 	}

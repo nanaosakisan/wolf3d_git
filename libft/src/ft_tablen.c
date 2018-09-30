@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_word.c                                       :+:      :+:    :+:   */
+/*   ft_tablen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arusso <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/10 14:15:09 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/03/10 14:15:11 by iporsenn         ###   ########.fr       */
+/*   Created: 2018/02/02 16:11:02 by arusso            #+#    #+#             */
+/*   Updated: 2018/02/02 16:12:25 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-int			count_word(const char *s, char c)
+size_t	ft_tablen(char **tab)
 {
-	int i;
-	int cpt;
+	int count;
 
-	i = 0;
-	cpt = 0;
-	if (!s || !c)
+	if (!tab)
 		return (0);
-	while (s[i])
-	{
-		if (s[i] == c && !s[i - 1])
-			i++;
-		if ((s[i - 1] != c && s[i] == c) || (!s[i + 1] && s[i] != c))
-			cpt++;
-		i++;
-	}
-	return (cpt);
+	count = 0;
+	while (tab[count])
+		count++;
+	return (count);
 }

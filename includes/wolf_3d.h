@@ -21,31 +21,40 @@
 // # include "../SDL2-2.0.8/include/SDL.h"
 
 # define WIDTH 512
-# define HEIGHT 384
+# define HEIGHT 512
 # define WIDTH_UI 50
 # define HEIGHT_UI 50
 # define THREAD 8
 # define SQUARE 16
+# define FLOOR "../textures/floor.xpm"
+# define WALL "../textures/wall.xpm"
+# define CEILING "../textures/ceiling.xpm"
 
-typedef	struct s_img
+typedef	struct s_point
 {
-	void 	*p_mlx;
-	void	*p_win;
+	int			x;
+	int			y;
+}				t_point;
+
+typedef	struct s_texture
+{
+	int		x;
+	int		y;
 	void	*p_img;
 	char	*img_addr;
 	int		bpp;
 	int		size;
 	int		endian;
-}				t_img;
+}				t_texture;
 
-typedef struct	s_map
-{
-	void	*p_img;
-	char	*img_addr;
-	int		bpp;
-	int		size;
-	int		endian;
-}				t_map;
+// typedef struct	s_map
+// {
+// 	void	*p_img;
+// 	char	*img_addr;
+// 	int		bpp;
+// 	int		size;
+// 	int		endian;
+// }				t_map;
 
 typedef struct	s_player
 {
@@ -59,38 +68,46 @@ typedef struct	s_player
 
 typedef struct	s_global
 {
-	t_img		img;
-	t_map		map;
+	t_texture	wall;
+	t_texture	ceiling;
+	t_texture	floor;
+	// t_map		mini_map;
 	t_player	player;
+	int			fd;
+	void 		*mlx;
+	void		*win;
+	void		*p_img;
+	char		*img_addr;
+	int			bpp;
+	int			size;
+	int			endian;
 	char		*name;
-	int			**wall;
-	int			width;
-	int			height;
+	int			**map;
+	int			map_x;
+	int			map_y;
 	int			x_init;
 	int			y_init;
 	long		time;
 	long		old_time;
-	int			color;
+	// int			color; couleur pour mini_map
 	int			(*key_func[1])(struct s_global*, int);
 	int			len_key;
 	pthread_t	thread[THREAD];
 }				t_global;
 
-int				check_map(char *line, int cpt, t_global *global, int *tmp);
+int				check_map(t_global *g);
+void			check_start_pos(t_global *g);
 int				close_map(t_global *global, int key);
 int				deal_key(int key, t_global *global);
 void			draw_segment(float *coord_src, float *coord_dst, \
 															t_global *global);
 void			draw_white_square(int x, int y, t_global *global);
 void			draw_black_square(int x, int y, t_global *global);
-void			free_array(char **array, int len_array);
 void			free_parse(int **wall, int len_array);
-void			init_global(t_global *global);
-int				main(int ac, char **av);
+void			init_map(t_global *g);
 void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
 																	int color);
-void			launch_mini_map(t_global *global);
-int				launch_parse(t_global *global, int fd, char **av);
+// void			launch_mini_map(t_global *global);
 void			print_parse(t_global *global);
 void			raycast_loop(t_global *global);
 

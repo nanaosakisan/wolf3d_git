@@ -20,20 +20,20 @@ void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
 	if (global->img.endian == 0)
 	{
 		i = (global->img.size * y) + (x * (global->img.bpp / 8));
-		global->img.img_addr[i] = mlx_get_color_value(global->img.p_mlx, color);
-		global->img.img_addr[i + 1] = mlx_get_color_value(global->img.p_mlx, \
+		global->img.img_addr[i] = mlx_get_color_value(global->mlx, color);
+		global->img.img_addr[i + 1] = mlx_get_color_value(global->mlx, \
 																	color >> 8);
-		global->img.img_addr[i + 2] = mlx_get_color_value(global->img.p_mlx, \
+		global->img.img_addr[i + 2] = mlx_get_color_value(global->mlx, \
 																color >> 16);
 	}
 	else
 	{
 		i = (global->img.size * y) + (x * (global->img.bpp / 8));
-		global->img.img_addr[i] = mlx_get_color_value(global->img.p_mlx, \
+		global->img.img_addr[i] = mlx_get_color_value(global->mlx, \
 																color >> 16);
-		global->img.img_addr[i + 1] = mlx_get_color_value(global->img.p_mlx, \
+		global->img.img_addr[i + 1] = mlx_get_color_value(global->mlx, \
 																	color >> 8);
-		global->img.img_addr[i + 2] = mlx_get_color_value(global->img.p_mlx, \
+		global->img.img_addr[i + 2] = mlx_get_color_value(global->mlx, \
 																		color);
 	}
 }

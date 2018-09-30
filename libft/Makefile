@@ -46,6 +46,7 @@ SRC_NAME =	error.c 					\
 			ft_putnbr_endl.c			\
 			ft_putstr.c					\
 			ft_putstr_fd.c				\
+			ft_splitoa.c				\
 			ft_strcat.c					\
 			ft_strncat.c				\
 			ft_strlcat.c				\
@@ -72,6 +73,7 @@ SRC_NAME =	error.c 					\
 			ft_strnstr.c				\
 			ft_strsub.c					\
 			ft_strtrim.c				\
+			ft_tablen.c					\
 			ft_toupper.c				\
 			ft_tolower.c				\
 			get_next_line.c

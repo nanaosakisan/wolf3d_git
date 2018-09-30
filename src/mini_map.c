@@ -67,7 +67,7 @@ void	launch_mini_map(t_global *global)
 {
 	int i;
 
-	global->map.p_img = mlx_new_image(global->img.p_mlx, WIDTH, HEIGHT);
+	global->map.p_img = mlx_new_image(global->mlx, WIDTH, HEIGHT);
 	global->map.img_addr = mlx_get_data_addr(global->img.p_img, \
 		&global->map.bpp, &global->map.size, &global->map.endian);
 	i = -1;
@@ -76,6 +76,6 @@ void	launch_mini_map(t_global *global)
 	i = -1;
 	while (++i < THREAD)
 		pthread_join(global->thread[i], NULL);
-	mlx_put_image_to_window(global->img.p_mlx, global->img.p_win, \
+	mlx_put_image_to_window(global->mlx, global->win, \
 													global->map.p_img, 0, 0);
 }

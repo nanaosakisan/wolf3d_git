@@ -18,12 +18,12 @@ void	print_parse(t_global *global)
 	int j;
 
 	i = -1;
-	while (++i < global->height)
+	while (++i < global->map_y)
 	{
 		j = -1;
-		while (++j < global->width)
+		while (++j < global->map_x)
 		{
-			ft_putnbr(global->wall[i][j]);
+			ft_putnbr(global->map[i][j]);
 			ft_putchar(' ');
 		}
 		ft_putchar('\n');
