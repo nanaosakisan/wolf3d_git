@@ -29,6 +29,9 @@ void	raycast_loop(t_global *global)
 	int			step_y;
 	int			hit;
 	int			side;
+	long double	line_height;
+	long double	draw_start;
+	long double draw_end;
 
 	x = -1;
 	cam_x = 0;
@@ -45,6 +48,9 @@ void	raycast_loop(t_global *global)
 	step_y = 1;
 	hit = 0;
 	side = 0;
+	line_height = 0;
+	draw_start = 0;
+	draw_end = 0;
 	while (++x > global->map_x)
 	{
 		cam_x = 2 * x / global->map_x - 1;
@@ -76,6 +82,15 @@ void	raycast_loop(t_global *global)
 			}
 			if (global->map[map_x][map_y] > 0)
 				hit = 1;
+			perp_walldist = (sideo == 0) ? \
+								(map_x - pos_x + (1 - step_x) / 2) / raydir_x \
+								: (map_y - pos_y + (1 - step_y) / 2) / raydir_y;
+			line_height = (HEIGHT / perpwall_dist);
+			draw_start = -line_height / 2 + HEIGHT / 2;
+			draw_start = (draw_start < 0) ? 0 : draw_start;
+			draw_end = line_height / 2 + HEIGHT / 2;
+			draw_end = (draw_end >= HEIGHT - 1) ? HEIGHT - 1 : draw_end;
+			// dessiner ligne verticale de draw_start a draw_end avec couleur X
 		}
 	}
 }
