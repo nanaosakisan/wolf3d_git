@@ -12,7 +12,7 @@
 
 #include "../includes/wolf_3d.h"
 
-void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
+void		mlx_pixel_put_to_image(t_global *global, int x, int y, \
 																	int color)
 {
 	int i;
@@ -86,7 +86,7 @@ static void		draw_vertical(float *coord, int *diff, int *inc, \
 	}
 }
 
-void			draw_segment(float *coord_src, float *coord_dst, t_global *global)
+void		draw_segment(float *coord_src, float *coord_dst, t_global *global)
 {
 	int diff[2];
 	int inc[2];

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/wolf_3d.h"
 
 int		check_borders(int **map, t_point start, int current_x, int current_y)

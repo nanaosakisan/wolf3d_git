@@ -40,7 +40,8 @@ HEADER = $(addprefix $(HEADER_PATH), $(HEADER_NAME))
 # 				libSDL2_test.a
 # HEADER = $(addprefix $(HEADER_PATH), $(HEADER_NAME))
 
-FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g
+# -fsanitize=address
 FLAGS_LIBX = -lmlx -framework OpenGL -framework AppKit -lpthread -D_REENTRANT
 
 

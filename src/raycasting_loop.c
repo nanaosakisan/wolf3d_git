@@ -24,7 +24,7 @@ void	raycast_loop(t_global *global)
 	double		sidedist_y;
 	double		deltadist_x;
 	double		deltadist_y;
-	double		perp_walldist;;
+	double		perp_walldist;
 	int			step_x;
 	int			step_y;
 	int			hit;

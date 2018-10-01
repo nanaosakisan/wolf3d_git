@@ -12,7 +12,7 @@
 
 #include "../includes/wolf_3d.h"
 
-void	init_textures(t_global *g)
+void		init_textures(t_global *g)
 {
 	g->wall.p_img = mlx_xpm_file_to_image(g->mlx, WALL, &g->wall.x, &g->wall.y);
 	g->wall.img_addr = mlx_get_data_addr(g->wall.p_img, &g->wall.bpp, \
@@ -27,7 +27,7 @@ void	init_textures(t_global *g)
 										&g->ceiling.size, &g->ceiling.endian);
 }
 
-void			init_global(t_global *global)
+void		init_global(t_global *global)
 {
 	int		i;
 	char	*title;
@@ -52,7 +52,7 @@ void			init_global(t_global *global)
 	init_textures(global);
 }
 
-char	*load_map(t_global *g)
+char		*load_map(t_global *g)
 {
 	char	*line;
 	char	*str;
@@ -80,7 +80,7 @@ char	*load_map(t_global *g)
 	return (str);
 }
 
-void	init_map(t_global *g)
+void		init_map(t_global *g)
 {
 	char	**c_map;
 	size_t	i;

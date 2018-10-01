@@ -14,10 +14,10 @@
 
 static void		first_read(int fd, t_global *global)
 {
-	int cpt;
-	int ret;
-	int tmp;
-	char *line;
+	int		cpt;
+	int		ret;
+	int		tmp;
+	char	*line;
 
 	cpt = 0;
 	ret = 0;
@@ -80,7 +80,7 @@ void			parsing(t_global *global, char *line)
 	free_array(array, len_array);
 }
 
-int			launch_parse(t_global *global, int fd, char **av)
+int				launch_parse(t_global *global, int fd, char **av)
 {
 	int		ret;
 	int		cpt;

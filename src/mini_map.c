@@ -12,7 +12,7 @@
 
 #include "../includes/wolf_3d.h"
 
-void	draw_map(t_global *global)
+void		draw_map(t_global *global)
 {
 	int i;
 	int j;
@@ -31,7 +31,7 @@ void	draw_map(t_global *global)
 	}
 }
 
-static int		get_thread_id(pthread_t id, pthread_t *thread)
+static int	get_thread_id(pthread_t id, pthread_t *thread)
 {
 	int i;
 
@@ -41,7 +41,7 @@ static int		get_thread_id(pthread_t id, pthread_t *thread)
 	return (i);
 }
 
-static void		*launch_thread(void *data)
+static void	*launch_thread(void *data)
 {
 	int			start;
 	int			end;
@@ -63,7 +63,7 @@ static void		*launch_thread(void *data)
 	return (NULL);
 }
 
-void	launch_mini_map(t_global *global)
+void		launch_mini_map(t_global *global)
 {
 	int i;
 
