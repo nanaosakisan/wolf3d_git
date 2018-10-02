@@ -6,25 +6,31 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 17:53:25 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/09/30 17:53:27 by iporsenn         ###   ########.fr       */
+/*   Updated: 2018/10/02 16:33:00 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf_3d.h"
+#include <stdio.h>
 
 void		init_textures(t_global *g)
 {
-	g->wall.p_img = mlx_xpm_file_to_image(g->mlx, WALL, &g->wall.x, &g->wall.y);
+	
+	if(!(g->wall.p_img = mlx_xpm_file_to_image(g->mlx, WALL, &g->wall.x, \
+			&g->wall.y)))
+		error("Error : no texture found for wall.");
 	g->wall.img_addr = mlx_get_data_addr(g->wall.p_img, &g->wall.bpp, \
-												&g->wall.size, &g->wall.endian);
-	g->floor.p_img = mlx_xpm_file_to_image(g->mlx, FLOOR, &g->floor.x, \
-																&g->floor.y);
+			&g->wall.size, &g->wall.endian);
+	if (!(g->floor.p_img = mlx_xpm_file_to_image(g->mlx, FLOOR, &g->floor.x, \
+			&g->floor.y)))
+		error("Error : no texture found for floor.");
 	g->floor.img_addr = mlx_get_data_addr(g->floor.p_img, &g->floor.bpp, \
-											&g->floor.size, &g->floor.endian);
-	g->ceiling.p_img = mlx_xpm_file_to_image(g->mlx, CEILING, \
-												&g->ceiling.x, &g->ceiling.y);
+			&g->floor.size, &g->floor.endian);
+	if (!(g->ceiling.p_img = mlx_xpm_file_to_image(g->mlx, CEILING, \
+			&g->ceiling.x, &g->ceiling.y)))
+		error("Error : no texture found for ceiling.");
 	g->floor.img_addr = mlx_get_data_addr(g->ceiling.p_img, &g->ceiling.bpp, \
-										&g->ceiling.size, &g->ceiling.endian);
+			&g->ceiling.size, &g->ceiling.endian);
 }
 
 void		init_global(t_global *global)
@@ -38,7 +44,7 @@ void		init_global(t_global *global)
 	global->win = mlx_new_window(global->mlx, WIDTH, HEIGHT, title);
 	global->p_img = mlx_new_image(global->mlx, WIDTH, HEIGHT);
 	global->img_addr = mlx_get_data_addr(global->p_img, &global->bpp, \
-												&global->size, &global->endian);
+			&global->size, &global->endian);
 	global->x_init = 0;
 	global->y_init = 0;
 	global->time = 0;
@@ -52,50 +58,44 @@ void		init_global(t_global *global)
 	init_textures(global);
 }
 
-char		*load_map(t_global *g)
+char	**load_map(t_global *g)
 {
+	char	**dest;
 	char	*line;
-	char	*str;
-	char	*tmp;
 	int		ret;
+	int		i;
 
-	str = ft_strnew(0);
+	line = NULL;
 	if ((ret = get_next_line(g->fd, &line)) < 0)
 		error("Error : map file invalid.");
+	ft_strdel(&line);
+	i = 0;
+	if (!(dest = (char**)malloc(sizeof(char*) * g->map_y + 1)))
+		error("Error : malloc failed.");
 	while ((ret = get_next_line(g->fd, &line)))
 	{
 		if (ret == -1)
-		{
-			free(str);
-			free(line);
-			return (NULL);
-		}
-		tmp = str;
-		str = ft_strjoin(str, line);
-		free(line);
-		str = ft_strcat(str, "\n");
-		free(tmp);
+			error("Nope.");
+		dest[i] = ft_strdup(line);
+		i++;
 	}
 	close(g->fd);
-	return (str);
+	return (dest);
 }
 
-void		init_map(t_global *g)
+void	init_map(t_global *g)
 {
 	char	**c_map;
 	size_t	i;
-	char	*str;
-
-	str = load_map(g);
-	c_map = ft_strsplit(str, '\n');
-	g->map_x = count_word((const char*)c_map[1], ' ');
+	c_map = load_map(g);
+	g->map_x = count_word((const char*)c_map[0], ' ');
 	if (!(g->map = (int**)malloc(sizeof(int*) * ft_tablen(c_map) + 1)))
-		error("Error : map malloc failed.");
+		error("0");
 	i = 0;
 	while (i != ft_tablen(c_map))
 	{
 		if (!(g->map[i] = ft_splitoa(c_map[i], ' ')))
-			error("Error : map conversion failed.");
+			error("0");
 		i++;
 	}
 	g->map[i] = NULL;
@@ -103,7 +103,4 @@ void		init_map(t_global *g)
 	while (c_map[++i])
 		free(c_map[i]);
 	free(c_map);
-	free(str);
-	check_start_pos(g);
-	init_global(g);
 }

@@ -6,7 +6,7 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 17:44:07 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/09/30 17:44:08 by iporsenn         ###   ########.fr       */
+/*   Updated: 2018/10/02 14:09:46 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,6 @@ void	check_start_pos(t_global *g)
 	free(tmp);
 }
 
-int		check_lines(char **line)
-{
-	static int	count;
-	int			len;
-	int			i;
-
-	if (!count)
-		count = 0;
-	len = count_word(*line, ' ');
-	if (count == 0)
-		count = len;
-	if ((count != len) || (len < 3))
-		return (0);
-	i = -1;
-	while ((*line)[++i])
-	{
-		if ((*line)[i] != ' ' && (*line)[i] != '\t' && !ft_isdigit((*line)[i]))
-			return (0);
-	}
-	return (1);
-}
-
 void	init_player(t_global *g, char *line)
 {
 	int	*coord;
@@ -89,6 +67,29 @@ void	init_player(t_global *g, char *line)
 	free(coord);
 }
 
+int		check_lines(char **line)
+{
+	static int	count;
+	int			len;
+	int			i;
+
+	if (!count)
+		count = 0;
+	len = count_word(*line, ' ');
+	if (count == 0)
+		count = len;
+	if ((count != len) || (len == 0))
+		return (0);
+	i = -1;
+	while ((*line)[++i])
+	{
+		if ((*line)[i] != ' ' && (*line)[i] != '\t')
+			if (((*line)[i] < '0' || (*line)[i] > '9') && (*line)[i] != '-')
+				return (0);
+	}
+	return (1);
+}
+
 int		check_map(t_global *g)
 {
 	int		ret;
@@ -97,18 +98,19 @@ int		check_map(t_global *g)
 	if (!(g->fd = open(g->name, O_RDONLY)))
 		error("Error : coudn't open map.");
 	line = NULL;
-	g->map_y = 0;
 	if ((ret = get_next_line(g->fd, &line)) < 0)
 		error("Error : map file invalid.");
 	init_player(g, line);
+	ft_strdel(&line);
+	g->map_y = 0;
 	while ((ret = get_next_line(g->fd, &line)) > 0)
 	{
 		if ((check_lines(&line)) != 1)
 			return (0);
-		(g->map_y)++;
+		g->map_y++;
 		ft_strdel(&line);
 	}
-	if ((close(g->fd)) == -1 || g->map_y == 0)
+	if ((close(g->fd)) == -1 || g->map_y < 3)
 		return (0);
 	if ((g->fd = open(g->name, O_RDONLY)) == -1)
 		return (0);

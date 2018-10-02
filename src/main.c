@@ -6,7 +6,7 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 17:26:24 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/09/30 15:35:39 by iporsenn         ###   ########.fr       */
+/*   Updated: 2018/10/02 16:33:51 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		main(int ac, char **av)
 	if (!(check_map(global)))
 		error("Error : unvalid map file or map file doesn't exist.");
 	init_map(global);
+	init_global(global);
 	// launch_mini_map(&global);
 	// raycast_loop(&global);
 	mlx_put_image_to_window(global->mlx, global->win, \

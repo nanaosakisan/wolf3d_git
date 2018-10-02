@@ -6,7 +6,7 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/28 15:48:08 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/09/28 15:48:11 by iporsenn         ###   ########.fr       */
+/*   Updated: 2018/10/01 16:40:02 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	raycast_loop(t_global *global)
 {
+	(void)global;
+	/*
 	int			x;
 	long double cam_x;
 	long double raydir_x;
@@ -92,5 +94,5 @@ void	raycast_loop(t_global *global)
 			draw_end = (draw_end >= HEIGHT - 1) ? HEIGHT - 1 : draw_end;
 			// dessiner ligne verticale de draw_start a draw_end avec couleur X
 		}
-	}
+	}*/
 }

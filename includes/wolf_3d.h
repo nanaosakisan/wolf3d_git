@@ -6,7 +6,7 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 14:09:45 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/06/04 14:09:47 by iporsenn         ###   ########.fr       */
+/*   Updated: 2018/10/02 16:18:24 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # define HEIGHT_UI 50
 # define THREAD 8
 # define SQUARE 16
-# define FLOOR "../textures/floor.xpm"
-# define WALL "../textures/wall.xpm"
-# define CEILING "../textures/ceiling.xpm"
+# define FLOOR "textures/floor.xpm"
+# define WALL "textures/wall.xpm"
+# define CEILING "textures/ceiling.xpm"
 
 typedef	struct s_point
 {
@@ -105,6 +105,7 @@ void			draw_white_square(int x, int y, t_global *global);
 void			draw_black_square(int x, int y, t_global *global);
 void			free_parse(int **wall, int len_array);
 void			init_map(t_global *g);
+void			init_global(t_global *g);
 void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
 																	int color);
 // void			launch_mini_map(t_global *global);
