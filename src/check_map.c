@@ -40,7 +40,7 @@ void	check_start_pos(t_global *g)
 	tmp = (int**)malloc(sizeof(int*) + 1);
 	i = -1;
 	while (g->map[++i])
-		ft_memcpy(tmp, g->map[i], g->map_y);
+		ft_memcpy(tmp, g->map[i], g->max_y);
 	tmp[i] = NULL;
 	if (check_borders(tmp, start, start.x, start.y))
 		error("Error : player spawn outside the map.");
@@ -51,20 +51,20 @@ void	check_start_pos(t_global *g)
 
 void	init_player(t_global *g, char *line)
 {
-	int	*coord;
+	int	coord[2];
 
 	if (!line)
 		error("Error : empty map.");
 	if (count_word(line, ' ') != 2)
 		error("Error : starting position not found or in a wall.");
-	coord = ft_splitoa(line, (char)" ");
+	coord[0] = ft_atoi(line);
+	coord[1] = ft_atoi(ft_strchr(line, ' '));
 	g->player.pos_x = coord[0];
 	g->player.pos_y = coord[1];
-	g->player.dir_x = -1;
-	g->player.dir_y = 0;
+	g->player.dir_x = 1;
+	g->player.dir_y = -1;
 	g->player.plane_x = 0;
 	g->player.plane_y = 0.66;
-	free(coord);
 }
 
 int		check_lines(char **line)
@@ -102,15 +102,15 @@ int		check_map(t_global *g)
 		error("Error : map file invalid.");
 	init_player(g, line);
 	ft_strdel(&line);
-	g->map_y = 0;
+	g->max_y = 0;
 	while ((ret = get_next_line(g->fd, &line)) > 0)
 	{
 		if ((check_lines(&line)) != 1)
 			return (0);
-		g->map_y++;
+		g->max_y++;
 		ft_strdel(&line);
 	}
-	if ((close(g->fd)) == -1 || g->map_y < 3)
+	if ((close(g->fd)) == -1 || g->max_y < 3)
 		return (0);
 	if ((g->fd = open(g->name, O_RDONLY)) == -1)
 		return (0);

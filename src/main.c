@@ -26,9 +26,9 @@ int		main(int ac, char **av)
 	init_global(global);
 	init_map(global);
 	// launch_mini_map(&global);
-	// raycast_loop(&global);
-	mlx_put_image_to_window(global->mlx, global->win, \
-			global->floor.p_img, global->floor.x, global->floor.y);
+	raycast_loop(global);
+	mlx_put_image_to_window(global->mlx, global->win, global->p_img, \
+												global->max_x, global->max_y);
 	mlx_hook(global->win, 2, (1L << 0), deal_key, &global);
 	mlx_loop(global->mlx);
 	return (0);

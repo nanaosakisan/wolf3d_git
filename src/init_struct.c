@@ -12,9 +12,8 @@
 
 #include "../includes/wolf_3d.h"
 
-void		init_textures(t_global *g)
+static void		init_textures(t_global *g)
 {
-	g->floor.y = 0;
 	if(!(g->wall.p_img = mlx_xpm_file_to_image(g->mlx, WALL, &g->wall.x, \
 			&g->wall.y)))
 		error("Error : no texture found for wall.");
@@ -32,6 +31,17 @@ void		init_textures(t_global *g)
 			&g->ceiling.size, &g->ceiling.endian);
 }
 
+static void init_ray(t_rayon *ray)
+{
+	ray->dir_x = 0;
+	ray->dir_y = 0;
+	ray->sidedist_x = 0;
+	ray->sidedist_y = 0;
+	ray->deltadist_x = 0;
+	ray->deltadist_y = 0;
+	ray->perp_walldist = 0;
+}
+
 void		init_global(t_global *global)
 {
 	int		i;
@@ -44,17 +54,18 @@ void		init_global(t_global *global)
 	global->p_img = mlx_new_image(global->mlx, WIDTH, HEIGHT);
 	global->img_addr = mlx_get_data_addr(global->p_img, &global->bpp, \
 			&global->size, &global->endian);
-	global->x_init = 0;
-	global->y_init = 0;
 	global->time = 0;
 	global->old_time = 0;
-	// global->color = 0xFFFFFF; couleur pour mini_map
+	global->color = 0xFFFFFF;
 	global->key_func[0] = &close_map;
-	global->len_key = 1;
+	global->key_func[1] = &get_dir;
+	global->key_func[2] = &get_pos;
+	global->len_key = 3;
 	while (++i < THREAD)
 		global->thread[i] = 0;
 	free(title);
 	init_textures(global);
+	init_ray(&global->ray);
 }
 
 char	**load_map(t_global *g)
@@ -69,7 +80,7 @@ char	**load_map(t_global *g)
 		error("Error : map file invalid.");
 	ft_strdel(&line);
 	i = 0;
-	if (!(dest = (char**)malloc(sizeof(char*) * g->map_y + 1)))
+	if (!(dest = (char**)malloc(sizeof(char*) * g->max_y + 1)))
 		error("Error : malloc failed.");
 	while ((ret = get_next_line(g->fd, &line)))
 	{
@@ -91,7 +102,7 @@ void	init_map(t_global *g)
 	size_t	len_tab;
 
 	c_map = load_map(g);
-	g->map_x = count_word((const char*)c_map[0], ' ');
+	g->max_x = count_word((const char*)c_map[0], ' ');
 	if (!(g->map = (int**)malloc(sizeof(int*) * ft_tablen(c_map) + 1)))
 		error("0");
 	len_tab = ft_tablen(c_map);

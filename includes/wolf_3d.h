@@ -26,6 +26,11 @@
 # define HEIGHT_UI 50
 # define THREAD 8
 # define SQUARE 16
+# define UP 126 || 13
+# define DOWN 125 || 1
+# define LEFT 123 || 0
+# define RIGHT 124 || 2
+# define ESCAPE 53
 # define FLOOR "textures/floor.xpm"
 # define WALL "textures/wall.xpm"
 # define CEILING "textures/ceiling.xpm"
@@ -66,11 +71,25 @@ typedef struct	s_player
 	long double		plane_y;
 }				t_player;
 
+typedef struct	s_rayon
+{
+	long double dir_x;
+	long double	dir_y;
+	int			map_x; //coord de la case dans lequel le rayon se trouve (ray_x)
+	int			map_y; //coord de la case dans lequel le rayon se trouve (ray_y)
+	double		sidedist_x; // distance que le rayon a parcouru depuis la position du joueur
+	double		sidedist_y;
+	double		deltadist_x; // distance que le rayon doit parcourir pour passer d'une case a l'autre
+	double		deltadist_y;
+	double		perp_walldist; //longueur totale du rayon
+}				t_rayon;
+
 typedef struct	s_global
 {
 	t_texture	wall;
 	t_texture	ceiling;
 	t_texture	floor;
+	t_rayon		ray;
 	// t_map		mini_map;
 	t_player	player;
 	int			fd;
@@ -83,14 +102,12 @@ typedef struct	s_global
 	int			endian;
 	char		*name;
 	int			**map;
-	int			map_x;
-	int			map_y;
-	int			x_init;
-	int			y_init;
+	int			max_x;
+	int			max_y;
 	long		time;
 	long		old_time;
-	// int			color; couleur pour mini_map
-	int			(*key_func[1])(struct s_global*, int);
+	int			color;
+	int			(*key_func[3])(struct s_global*, int);
 	int			len_key;
 	pthread_t	thread[THREAD];
 }				t_global;
@@ -104,13 +121,14 @@ void			draw_segment(float *coord_src, float *coord_dst, \
 void			draw_white_square(int x, int y, t_global *global);
 void			draw_black_square(int x, int y, t_global *global);
 void			free_parse(int **wall, int len_array);
+int   			get_dir(t_global *g, int key);
+int    			get_pos(t_global *g, int key);
 void			init_map(t_global *g);
 void			init_global(t_global *g);
 void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
 																	int color);
 // void			launch_mini_map(t_global *global);
-void			print_parse(t_global *global);
-void			raycast_loop(t_global *global);
+void			raycast_loop(t_global *g);
 void			texture(t_global *global);
 
 #endif

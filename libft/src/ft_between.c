@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_parse.c                                      :+:      :+:    :+:   */
+/*   ft_between.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/12 14:47:40 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/06/12 14:47:41 by iporsenn         ###   ########.fr       */
+/*   Created: 2018/10/03 15:27:31 by iporsenn          #+#    #+#             */
+/*   Updated: 2018/10/03 15:27:34 by iporsenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/wolf_3d.h"
+#include "../include/libft.h"
 
-void	print_parse(t_global *global)
+int        ft_between(int a, int b, int c)
 {
-	int i;
-	int j;
-
-	i = -1;
-	while (++i < global->map_y)
-	{
-		j = -1;
-		while (++j < global->map_x)
-		{
-			ft_putnbr(global->map[i][j]);
-			ft_putchar(' ');
-		}
-		ft_putchar('\n');
-	}
-	printf("x_init = %Lf, y_init = %Lf\n", global->player.pos_x, \
-														global->player.pos_y);
+    return ((a <= b && b <= c) ? 1 : 0);
 }
