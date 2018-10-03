@@ -23,8 +23,8 @@ int		main(int ac, char **av)
 	global->name = av[1];
 	if (!(check_map(global)))
 		error("Error : unvalid map file or map file doesn't exist.");
-	init_map(global);
 	init_global(global);
+	init_map(global);
 	// launch_mini_map(&global);
 	// raycast_loop(&global);
 	mlx_put_image_to_window(global->mlx, global->win, \

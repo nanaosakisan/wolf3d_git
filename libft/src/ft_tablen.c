@@ -14,7 +14,7 @@
 
 size_t	ft_tablen(char **tab)
 {
-	int count;
+	size_t count;
 
 	if (!tab)
 		return (0);

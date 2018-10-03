@@ -11,11 +11,10 @@
 /* ************************************************************************** */
 
 #include "../includes/wolf_3d.h"
-#include <stdio.h>
 
 void		init_textures(t_global *g)
 {
-	
+	g->floor.y = 0;
 	if(!(g->wall.p_img = mlx_xpm_file_to_image(g->mlx, WALL, &g->wall.x, \
 			&g->wall.y)))
 		error("Error : no texture found for wall.");
@@ -79,20 +78,25 @@ char	**load_map(t_global *g)
 		dest[i] = ft_strdup(line);
 		i++;
 	}
+	dest[i] = NULL;
 	close(g->fd);
 	return (dest);
 }
 
 void	init_map(t_global *g)
 {
+
 	char	**c_map;
 	size_t	i;
+	size_t	len_tab;
+
 	c_map = load_map(g);
 	g->map_x = count_word((const char*)c_map[0], ' ');
 	if (!(g->map = (int**)malloc(sizeof(int*) * ft_tablen(c_map) + 1)))
 		error("0");
+	len_tab = ft_tablen(c_map);
 	i = 0;
-	while (i != ft_tablen(c_map))
+	while (i != len_tab)
 	{
 		if (!(g->map[i] = ft_splitoa(c_map[i], ' ')))
 			error("0");
