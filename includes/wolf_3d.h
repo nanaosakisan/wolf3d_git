@@ -43,13 +43,13 @@ typedef	struct s_point
 
 typedef	struct s_texture
 {
-	int		x;
-	int		y;
-	void	*p_img;
-	char	*img_addr;
-	int		bpp;
-	int		size;
-	int		endian;
+	int			x;
+	int			y;
+	void		*p_img;
+	char		*img_addr;
+	int			bpp;
+	int			size;
+	int			endian;
 }				t_texture;
 
 // typedef struct	s_map
@@ -63,13 +63,20 @@ typedef	struct s_texture
 
 typedef struct	s_player
 {
-	long double		pos_x;
-	long double 	pos_y;
-	long double		dir_x;
-	long double		dir_y;
-	long double 	plane_x;
-	long double		plane_y;
+	long double	pos_x;
+	long double pos_y;
+	long double	dir_x;
+	long double	dir_y;
+	long double plane_x;
+	long double	plane_y;
 }				t_player;
+
+typedef	struct	s_color
+{
+	int			r;
+	int			g;
+	int			b;
+}				t_color;
 
 typedef struct	s_rayon
 {
@@ -77,11 +84,11 @@ typedef struct	s_rayon
 	long double	dir_y;
 	int			map_x; //coord de la case dans lequel le rayon se trouve (ray_x)
 	int			map_y; //coord de la case dans lequel le rayon se trouve (ray_y)
-	double		sidedist_x; // distance que le rayon a parcouru depuis la position du joueur
-	double		sidedist_y;
-	double		deltadist_x; // distance que le rayon doit parcourir pour passer d'une case a l'autre
-	double		deltadist_y;
-	double		perp_walldist; //longueur totale du rayon
+	long double		sidedist_x; // distance que le rayon a parcouru depuis la position du joueur
+	long double		sidedist_y;
+	long double		deltadist_x; // distance que le rayon doit parcourir pour passer d'une case a l'autre
+	long double		deltadist_y;
+	long double		perp_walldist; //longueur totale du rayon
 }				t_rayon;
 
 typedef struct	s_global

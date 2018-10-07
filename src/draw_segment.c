@@ -90,6 +90,8 @@ void		draw_segment(float *coord_src, float *coord_dst, t_global *global)
 	int diff[2];
 	int inc[2];
 
+	// printf("coord_src[0] = %f, coord_src[1] = %f, coord_dst[0] = %f, coord_dst[1] = %f\n",
+	// coord_src[0], coord_src[1], coord_dst[0], coord_dst[1]);
 	diff[0] = coord_dst[0] - coord_src[0];
 	diff[1] = coord_dst[1] - coord_src[1];
 	inc[0] = (diff[0] > 0) ? 1 : -1;
