@@ -61,8 +61,8 @@ void	init_player(t_global *g, char *line)
 	coord[1] = ft_atoi(ft_strchr(line, ' '));
 	g->player.pos_x = coord[0];
 	g->player.pos_y = coord[1];
-	g->player.dir_x = 0;
-	g->player.dir_y = -1;
+	g->player.dir_x = 1;
+	g->player.dir_y = 0;
 	g->player.plane_x = 0;
 	g->player.plane_y = 0.66;
 }

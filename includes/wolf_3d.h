@@ -21,7 +21,7 @@
 // # include "../SDL2-2.0.8/include/SDL.h"
 
 # define WIDTH 512
-# define HEIGHT 512
+# define HEIGHT 384
 # define WIDTH_UI 50
 # define HEIGHT_UI 50
 # define THREAD 8
@@ -80,15 +80,15 @@ typedef	struct	s_color
 
 typedef struct	s_rayon
 {
-	long double dir_x;
+	long double	dir_x;
 	long double	dir_y;
 	int			map_x; //coord de la case dans lequel le rayon se trouve (ray_x)
 	int			map_y; //coord de la case dans lequel le rayon se trouve (ray_y)
-	long double		sidedist_x; // distance que le rayon a parcouru depuis la position du joueur
-	long double		sidedist_y;
-	long double		deltadist_x; // distance que le rayon doit parcourir pour passer d'une case a l'autre
-	long double		deltadist_y;
-	long double		perp_walldist; //longueur totale du rayon
+	long double	sidedist_x; // distance que le rayon a parcouru depuis la position du joueur
+	long double	sidedist_y;
+	long double	deltadist_x; // distance que le rayon doit parcourir pour passer d'une case a l'autre
+	long double	deltadist_y;
+	long double	perp_walldist; //longueur totale du rayon
 }				t_rayon;
 
 typedef struct	s_global
