@@ -72,10 +72,10 @@ void	raycast_loop(t_global *g)
 		g->ray.perp_walldist = (side == 0) ? \
 			(g->ray.map_x - g->player.pos_x + (1 - step_x) / 2) / g->ray.dir_x \
 		: (g->ray.map_y - g->player.pos_y + (1 - step_y) / 2) / g->ray.dir_y;
-		printf("perp_walldist = %Lf\n", g->ray.perp_walldist);
+		// printf("perp_walldist = %Lf\n", g->ray.perp_walldist);
 		line_height = (g->ray.perp_walldist > 0) ? \
 								(int)(HEIGHT / g->ray.perp_walldist) : HEIGHT;
-		printf("line_height = %d\n", line_height);
+		// printf("line_height = %d\n", line_height);
 		coord_src[0] = (float)(-line_height / 2 + HEIGHT / 2);
 		coord_src[0] = (coord_src[0] < 0) ? 0 : coord_src[0];
 		coord_dest[0] = (float)(line_height / 2 + HEIGHT / 2);
