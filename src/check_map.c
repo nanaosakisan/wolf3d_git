@@ -16,7 +16,7 @@ int		check_borders(int **map, t_point start, int current_x, int current_y)
 {
 	if (!(map[current_y][current_x]))
 		return (1);
-	if (map[current_y][current_x] != 2)
+	if (map[current_y][current_x] > 1)
 		return (0);
 	map[current_y][current_x] = 0;
 	return (check_borders(map, start, current_x, current_y - 1)
@@ -35,7 +35,7 @@ void	check_start_pos(t_global *g)
 	start.y = g->player.pos_y;
 	if (g->map[start.y][start.x] == 0)
 		error("Error : player spawn outside the map.");
-	if (g->map[start.y][start.x] == 1)
+	if (g->map[start.y][start.x] > 1)
 		error("Error : player spawn in a wall.");
 	tmp = (int**)malloc(sizeof(int*) + 1);
 	i = -1;

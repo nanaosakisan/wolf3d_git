@@ -14,8 +14,10 @@
 
 static int	get_color(int id)
 {
-	if (id == 1)
+	if (id == 2)
 		return (0x00990099);
+	if (id == 3)
+		return (0x00009900);
 	return (0x00FFFFFF);
 }
 
@@ -32,6 +34,9 @@ void	raycast_loop(t_global *g)
 	float		coord_dest[2];
 
 	x = -1;
+	g->p_img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
+	g->img_addr = mlx_get_data_addr(g->p_img, &g->bpp, \
+			&g->size, &g->endian);
 	while (++x < WIDTH)
 	{
 		g->ray.map_x = (int)g->player.pos_x;
@@ -66,7 +71,7 @@ void	raycast_loop(t_global *g)
 				g->ray.map_y += step_y;
 				side = 1;
 			}
-			if (g->map[g->ray.map_y][g->ray.map_x] == 1)
+			if (g->map[g->ray.map_y][g->ray.map_x] > 1)
 				hit = 1;
 		}
 		g->ray.perp_walldist = (side == 0) ? \

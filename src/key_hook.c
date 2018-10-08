@@ -13,21 +13,21 @@
 #include "../includes/wolf_3d.h"
 
 int        get_dir(t_global *g, int key)
-{;
-    if (key != LEFT && key != RIGHT)
+{
+    if (!(LEFT) && !(RIGHT))
         return (0);
     if (ft_between(0, g->player.dir_y, 1))
     {
-        g->player.dir_x += (key == LEFT ? -0.1 : 0.1);
-        if (key == LEFT)
-            g->player.dir_y += (g->player.dir_x > 0 ? 0.1 : -0.1);
-        else
+        g->player.dir_x += (LEFT ? -0.1 : 0.1);
+        if (LEFT)
             g->player.dir_y += (g->player.dir_x > 0 ? -0.1 : 0.1);
+        else
+            g->player.dir_y += (g->player.dir_x > 0 ? 0.1 : -0.1);
     }
     else
     {
-        g->player.dir_x += (key == LEFT ? 0.1 : -0.1);
-        if (key == LEFT)
+        g->player.dir_x += (LEFT ? 0.1 : -0.1);
+        if (LEFT)
             g->player.dir_y += (g->player.dir_x > 0 ? 0.1 : -0.1);
         else
             g->player.dir_y += (g->player.dir_x > 0 ? -0.1 : 0.1);
@@ -38,30 +38,30 @@ int        get_dir(t_global *g, int key)
 }
 
 int        get_pos(t_global *g, int key)
-{;
-    if (key != UP && key != DOWN)
+{
+	if (!(UP) && !(DOWN))
         return (0);
-    g->player.pos_x += (key == UP ? g->player.dir_x : -g->player.dir_x);
-    g->player.pos_y += (key == UP ? g->player.dir_y : -g->player.dir_y);
+    g->player.pos_x += (UP ? g->player.dir_x : -g->player.dir_x) * 0.1;
+    g->player.pos_y += (UP ? g->player.dir_y : -g->player.dir_y) * 0.1;
 	mlx_destroy_image(g->mlx, g->p_img);
 	raycast_loop(g);
     return (1);
 }
 
-int		close_map(t_global *global, int key)
+int		close_map(t_global *g, int key)
 {
-	if (key != 53)
+	if (ESCAPE)
 		return (0);
-	free_parse(global->map, global->max_y);
+	free_parse(g->map, g->max_y);
 	exit(EXIT_SUCCESS);
 }
 
-int		deal_key(int key, t_global *global)
+int		deal_key(int key, t_global *g)
 {
 	int i;
 
 	i = 0;
-	while ((i < global->len_key) && !global->key_func[i](global, key));
+	while ((i < g->len_key) && !g->key_func[i](g, key))
 		i++;
 	return (0);
 }

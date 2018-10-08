@@ -42,28 +42,24 @@ static void init_ray(t_rayon *ray)
 	ray->perp_walldist = 0;
 }
 
-void		init_global(t_global *global)
+void		init_global(t_global *g)
 {
 	int		i;
 
 	i = -1;
-	global->mlx = mlx_init();
-	global->win = mlx_new_window(global->mlx, WIDTH, HEIGHT, global->name);
-	global->p_img = mlx_new_image(global->mlx, WIDTH, HEIGHT);
-	global->img_addr = mlx_get_data_addr(global->p_img, &global->bpp, \
-			&global->size, &global->endian);
-	global->time = 0;
-	global->old_time = 0;
-	global->color = 0xFFFFFF;
-	global->key_func[0] = &close_map;
-	global->key_func[1] = &get_dir;
-	global->key_func[2] = &get_pos;
-	global->len_key = 3;
-	printf("len_key = %d\n", global->len_key);
+	g->mlx = mlx_init();
+	g->win = mlx_new_window(g->mlx, WIDTH, HEIGHT, g->name);
+	g->time = 0;
+	g->old_time = 0;
+	g->color = 0xFFFFFF;
+	g->key_func[0] = &close_map;
+	g->key_func[1] = &get_dir;
+	g->key_func[2] = &get_pos;
+	g->len_key = 3;
 	while (++i < THREAD)
-		global->thread[i] = 0;
-	init_textures(global);
-	init_ray(&global->ray);
+		g->thread[i] = 0;
+	init_textures(g);
+	init_ray(&g->ray);
 }
 
 char	**load_map(t_global *g)

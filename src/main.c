@@ -14,20 +14,20 @@
 
 int		main(int ac, char **av)
 {
-	t_global	*global;
+	t_global	*g;
 
 	if (ac != 2)
 		error("Error : please enter a map file name.\n./wolf3d map_file.txt");
-	if (!(global = (t_global*)malloc(sizeof(t_global))))
+	if (!(g = (t_global*)malloc(sizeof(t_global))))
 		error("Error : malloc failed.");
-	global->name = av[1];
-	if (!(check_map(global)))
+	g->name = av[1];
+	if (!(check_map(g)))
 		error("Error : unvalid map file or map file doesn't exist.");
-	init_global(global);
-	init_map(global);
+	init_global(g);
+	init_map(g);
 	// launch_mini_map(&global);
-	raycast_loop(global);
-	mlx_hook(global->win, 2, (1L << 0), deal_key, global);
-	mlx_loop(global->mlx);
+	raycast_loop(g);
+	mlx_hook(g->win, 2, (1L << 0), deal_key, g);
+	mlx_loop(g->mlx);
 	return (0);
 }

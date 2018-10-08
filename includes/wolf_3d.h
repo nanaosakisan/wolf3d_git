@@ -26,11 +26,11 @@
 # define HEIGHT_UI 50
 # define THREAD 8
 # define SQUARE 16
-# define UP 126 || 13
-# define DOWN 125 || 1
-# define LEFT 123 || 0
-# define RIGHT 124 || 2
-# define ESCAPE 53
+# define UP key == 126 || key == 13
+# define DOWN key == 125 || key == 1
+# define LEFT key == 123 || key == 0
+# define RIGHT key == 124 || key == 2
+# define ESCAPE key != 53
 # define FLOOR "textures/floor.xpm"
 # define WALL "textures/wall.xpm"
 # define CEILING "textures/ceiling.xpm"
