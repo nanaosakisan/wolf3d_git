@@ -31,17 +31,6 @@ static void		init_textures(t_global *g)
 			&g->ceiling.size, &g->ceiling.endian);
 }
 
-static void init_ray(t_rayon *ray)
-{
-	ray->dir_x = 0;
-	ray->dir_y = 0;
-	ray->sidedist_x = 0;
-	ray->sidedist_y = 0;
-	ray->deltadist_x = 0;
-	ray->deltadist_y = 0;
-	ray->perp_walldist = 0;
-}
-
 void		init_global(t_global *g)
 {
 	int		i;
@@ -59,7 +48,6 @@ void		init_global(t_global *g)
 	while (++i < THREAD)
 		g->thread[i] = 0;
 	init_textures(g);
-	init_ray(&g->ray);
 }
 
 char	**load_map(t_global *g)

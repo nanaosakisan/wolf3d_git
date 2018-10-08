@@ -24,7 +24,7 @@
 # define HEIGHT 384
 # define WIDTH_UI 50
 # define HEIGHT_UI 50
-# define THREAD 8
+# define THREAD 1
 # define SQUARE 16
 # define UP key == 126 || key == 13
 # define DOWN key == 125 || key == 1
@@ -51,15 +51,6 @@ typedef	struct s_texture
 	int			size;
 	int			endian;
 }				t_texture;
-
-// typedef struct	s_map
-// {
-// 	void	*p_img;
-// 	char	*img_addr;
-// 	int		bpp;
-// 	int		size;
-// 	int		endian;
-// }				t_map;
 
 typedef struct	s_player
 {
@@ -91,6 +82,15 @@ typedef struct	s_rayon
 	long double	perp_walldist; //longueur totale du rayon
 }				t_rayon;
 
+typedef	struct	s_local
+{
+	long double cam_x;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side;
+}				t_local;
+
 typedef struct	s_global
 {
 	t_texture	wall;
@@ -118,6 +118,7 @@ typedef struct	s_global
 	pthread_t	thread[THREAD];
 }				t_global;
 
+void			buh(t_global *g);
 int				check_map(t_global *g);
 void			check_start_pos(t_global *g);
 int				close_map(t_global *global, int key);
@@ -134,7 +135,7 @@ void			init_global(t_global *g);
 void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
 																	int color);
 // void			launch_mini_map(t_global *global);
-void			raycast_loop(t_global *g);
+void			raycast_loop(int x, int end, t_global *g);
 void			texture(t_global *global);
 
 #endif

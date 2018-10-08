@@ -25,8 +25,8 @@ int		main(int ac, char **av)
 		error("Error : unvalid map file or map file doesn't exist.");
 	init_global(g);
 	init_map(g);
-	// launch_mini_map(&global);
-	raycast_loop(g);
+	buh(g);
+	// raycast_loop(g);
 	mlx_hook(g->win, 2, (1L << 0), deal_key, g);
 	mlx_loop(g->mlx);
 	return (0);
