@@ -85,4 +85,5 @@ void	raycast_loop(t_global *g)
 		g->color = get_color(g->map[g->ray.map_y][g->ray.map_x]);
 		draw_segment(coord_src, coord_dest, g);
 	}
+	mlx_put_image_to_window(g->mlx, g->win, g->p_img, 0, 0);
 }

@@ -97,7 +97,6 @@ typedef struct	s_global
 	t_texture	ceiling;
 	t_texture	floor;
 	t_rayon		ray;
-	// t_map		mini_map;
 	t_player	player;
 	int			fd;
 	void 		*mlx;

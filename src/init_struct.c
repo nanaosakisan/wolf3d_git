@@ -45,12 +45,10 @@ static void init_ray(t_rayon *ray)
 void		init_global(t_global *global)
 {
 	int		i;
-	char	*title;
 
 	i = -1;
-	title = ft_strjoin("Wolf3d :", global->name);
 	global->mlx = mlx_init();
-	global->win = mlx_new_window(global->mlx, WIDTH, HEIGHT, title);
+	global->win = mlx_new_window(global->mlx, WIDTH, HEIGHT, global->name);
 	global->p_img = mlx_new_image(global->mlx, WIDTH, HEIGHT);
 	global->img_addr = mlx_get_data_addr(global->p_img, &global->bpp, \
 			&global->size, &global->endian);
@@ -61,9 +59,9 @@ void		init_global(t_global *global)
 	global->key_func[1] = &get_dir;
 	global->key_func[2] = &get_pos;
 	global->len_key = 3;
+	printf("len_key = %d\n", global->len_key);
 	while (++i < THREAD)
 		global->thread[i] = 0;
-	free(title);
 	init_textures(global);
 	init_ray(&global->ray);
 }

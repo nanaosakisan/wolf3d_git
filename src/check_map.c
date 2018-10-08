@@ -59,8 +59,8 @@ void	init_player(t_global *g, char *line)
 		error("Error : starting position not found or in a wall.");
 	coord[0] = ft_atoi(line);
 	coord[1] = ft_atoi(ft_strchr(line, ' '));
-	g->player.pos_x = coord[0];
-	g->player.pos_y = coord[1];
+	g->player.pos_x = coord[0] + 0.5;
+	g->player.pos_y = coord[1] + 0.5;
 	g->player.dir_x = 1;
 	g->player.dir_y = 0;
 	g->player.plane_x = 0;

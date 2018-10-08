@@ -13,8 +13,7 @@
 #include "../includes/wolf_3d.h"
 
 int        get_dir(t_global *g, int key)
-{
-	ft_putendl("buh");
+{;
     if (key != LEFT && key != RIGHT)
         return (0);
     if (ft_between(0, g->player.dir_y, 1))
@@ -39,8 +38,7 @@ int        get_dir(t_global *g, int key)
 }
 
 int        get_pos(t_global *g, int key)
-{
-	ft_putendl("arrrggggg");
+{;
     if (key != UP && key != DOWN)
         return (0);
     g->player.pos_x += (key == UP ? g->player.dir_x : -g->player.dir_x);
@@ -52,7 +50,6 @@ int        get_pos(t_global *g, int key)
 
 int		close_map(t_global *global, int key)
 {
-	ft_putendl("blblblblblbl");
 	if (key != 53)
 		return (0);
 	free_parse(global->map, global->max_y);
@@ -63,15 +60,8 @@ int		deal_key(int key, t_global *global)
 {
 	int i;
 
-	printf("key = %d\n", key);
 	i = 0;
-	// if (key == 53)
-	// 	close_map(global, key);
-	printf("i = %d\n", i);
-	while ((i < global->len_key) && !global->key_func[i](global, key))
-	{
-		ft_putendl("nyup");
+	while ((i < global->len_key) && !global->key_func[i](global, key));
 		i++;
-	}
 	return (0);
 }
