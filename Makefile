@@ -19,6 +19,7 @@ SRC_NAME =	aux.c				\
 			init_struct.c		\
 			key_hook.c			\
 			main.c				\
+			mini_map.c			\
 			raycasting_loop.c
 
 SRC =  $(addprefix $(SRC_PATH), $(SRC_NAME))

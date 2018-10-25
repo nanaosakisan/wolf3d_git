@@ -12,70 +12,83 @@
 
 #include "../includes/wolf_3d.h"
 
-void		draw_map(t_global *global)
+static void	mlx_pixel_put_image(t_global *global, int x, int y, int color)
+{
+	int i;
+
+	if (global->mini_map.endian == 0)
+	{
+		i = (global->mini_map.size * y) + (x * (global->mini_map.bpp / 8));
+		global->mini_map.img_addr[i] = mlx_get_color_value(global->mlx, color);
+		global->mini_map.img_addr[i + 1] = mlx_get_color_value(global->mlx, \
+																	color >> 8);
+		global->mini_map.img_addr[i + 2] = mlx_get_color_value(global->mlx, \
+																color >> 16);
+	}
+	else
+	{
+		i = (global->mini_map.size * y) + (x * (global->mini_map.bpp / 8));
+		global->mini_map.img_addr[i] = mlx_get_color_value(global->mlx, \
+																color >> 16);
+		global->mini_map.img_addr[i + 1] = mlx_get_color_value(global->mlx, \
+																	color >> 8);
+		global->mini_map.img_addr[i + 2] = mlx_get_color_value(global->mlx, \
+																		color);
+	}
+}
+
+static void	draw_white_square(int x, int y, t_global *global)
+{
+	int i;
+	int len_x;
+	int	len_y;
+
+	len_x = x + SQUARE;
+	len_y = y + SQUARE;
+	while (x < WIDTH && x <= len_x)
+	{
+		i = y;
+		while (++i <= HEIGHT && i <= len_y)
+			mlx_pixel_put_image(global, x, i, 0xFFFFFF);
+		x++;
+	}
+}
+
+static void	draw_black_square(int x, int y, t_global *global)
+{
+	int i;
+	int len;
+
+	len = x + SQUARE;
+	while (x < WIDTH && x < len)
+	{
+		i = y;
+		while (++i < HEIGHT && i <= y + SQUARE)
+			mlx_pixel_put_image(global, x, i, 0x000000);
+		x++;
+	}
+}
+
+void		launch_mini_map(t_global *g)
 {
 	int i;
 	int j;
 
+	g->mini_map.p_img = mlx_new_image(g->mlx, WIDTH_UI, HEIGHT);
+	g->mini_map.img_addr = mlx_get_data_addr(g->mini_map.p_img, \
+					&g->mini_map.bpp, &g->mini_map.size, &g->mini_map.endian);
 	i = -1;
-	while (++i < global->width)
+	while (++i < g->max_x)
 	{
 		j = -1;
-		while (++j < global->height)
+		while (++j < g->max_y)
 		{
-			if (global->wall[j][i] > 0 && global->wall[j][i] <= 9)
-				draw_white_square(i * SQUARE, j * SQUARE, global);
+			printf()
+			if (((g->map[j][i] / 10) >= 2) && ((g->map[j][i] / 10) <= 9))
+				draw_white_square(i * SQUARE, j * SQUARE, g);
 			else
-				draw_black_square(i * SQUARE, j * SQUARE, global);
+				draw_black_square(i * SQUARE, j * SQUARE, g);
 		}
 	}
-}
-
-static int	get_thread_id(pthread_t id, pthread_t *thread)
-{
-	int i;
-
-	i = 0;
-	while (i < THREAD && !pthread_equal(id, thread[i]))
-		i++;
-	return (i);
-}
-
-static void	*launch_thread(void *data)
-{
-	int			start;
-	int			end;
-	int			padding;
-	int			i;
-	t_global	*global;
-
-	global = (t_global *)data;
-	padding = WIDTH / THREAD;
-	start = get_thread_id(pthread_self(), global->thread) * padding;
-	end = start + padding + 1;
-	while (++start < WIDTH && start < end && start < SQUARE)
-	{
-		i = -1;
-		while (++i < HEIGHT && i < SQUARE)
-			draw_map(global);
-	}
-	pthread_exit(NULL);
-	return (NULL);
-}
-
-void		launch_mini_map(t_global *global)
-{
-	int i;
-
-	global->map.p_img = mlx_new_image(global->mlx, WIDTH, HEIGHT);
-	global->map.img_addr = mlx_get_data_addr(global->img.p_img, \
-		&global->map.bpp, &global->map.size, &global->map.endian);
-	i = -1;
-	while (++i < THREAD)
-		pthread_create(&global->thread[i], NULL, launch_thread, global);
-	i = -1;
-	while (++i < THREAD)
-		pthread_join(global->thread[i], NULL);
-	mlx_put_image_to_window(global->mlx, global->win, \
-													global->map.p_img, 0, 0);
+	mlx_put_image_to_window(g->mlx, g->win, g->mini_map.p_img, 0, 0);
 }

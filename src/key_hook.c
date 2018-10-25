@@ -6,7 +6,7 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/08 17:52:01 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/10/08 17:52:04 by iporsenn         ###   ########.fr       */
+/*   Updated: 2018/10/25 11:41:05 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,30 @@
 
 int		get_dir(t_global *g, int key)
 {
-	if (ft_between(0, g->player.dir_x, 1) && ft_between(0, g->player.dir_y, 1))
-	{
-		   g->player.dir_x += (LEFT ? -0.1 : 0.1);
-		   g->player.dir_y += (LEFT ? 0.1 : -0.1);
-	}
-	else if (ft_between(-1, g->player.dir_x, 0) \
-										&& ft_between(0, g->player.dir_y, 1))
-	{
-		g->player.dir_x += (LEFT ? -0.1 : 0.1);
-		g->player.dir_y += (LEFT ? -0.1 : 0.1);
-	}
-	else if (ft_between(-1, g->player.dir_x, 0) \
-										&& ft_between(-1, g->player.dir_y, 0))
-	{
-		g->player.dir_x += (LEFT ? 0.1 : -0.1);
-		g->player.dir_y += (LEFT ? -0.1 : 0.1);
-	}
-	else
-	{
-		g->player.dir_x += (LEFT ? 0.1 : -0.1);
-		g->player.dir_y += (LEFT ? 0.1 : -0.1);
-	}
-	printf("dir_x = %Lf\n", g->player.dir_x);
-	printf("dir_y = %Lf\n", g->player.dir_y);
-	ft_putendl("");
-	mlx_destroy_image(g->mlx, g->p_img);
+	long double tmp_dir;
+	long double tmp_plane;
+
+	if (!(LEFT) && !(RIGHT))
+		return (0);
+	tmp_dir = g->player.dir_x;
+	tmp_plane = g->player.plane_x;
+	g->player.dir_x = RIGHT ? g->player.dir_x * cos(g->player.rot)\
+					  - g->player.dir_y * sin(g->player.rot) \
+					  : g->player.dir_x * cos(-g->player.rot) \
+					  - g->player.dir_y * sin(-g->player.rot);
+	g->player.dir_y = RIGHT ? tmp_dir * sin(g->player.rot) \
+					  + g->player.dir_y * cos(g->player.rot) \
+					  : tmp_dir * sin(-g->player.rot) \
+					  + g->player.dir_y * cos(-g->player.rot);
+	g->player.plane_x = RIGHT ? g->player.plane_x * cos(g->player.rot) \
+						- g->player.plane_y * sin(g->player.rot) \
+						: g->player.plane_x * cos(-g->player.rot) \
+						- g->player.plane_y * sin(-g->player.rot);
+	g->player.plane_y = RIGHT ? tmp_plane * sin(g->player.rot) \
+						+ g->player.plane_y * cos(g->player.rot) \
+						: tmp_plane * sin(-g->player.rot) \
+						+ g->player.plane_y * cos(-g->player.rot);
 	buh(g);
-	// raycast_loop(g);
 	return (1);
 }
 
@@ -50,11 +46,25 @@ int		get_pos(t_global *g, int key)
 {
 	if (!(UP) && !(DOWN))
 		return (0);
-	g->player.pos_x += (UP ? g->player.dir_x : -g->player.dir_x) * 0.1;
-	g->player.pos_y += (UP ? g->player.dir_y : -g->player.dir_y) * 0.1;
-	mlx_destroy_image(g->mlx, g->p_img);
+	if (UP)
+	{
+		if (g->map[(int)(g->player.pos_y)]\
+				[(int)(g->player.pos_x + g->player.dir_x * g->player.speed)] <= 19)
+			g->player.pos_x += g->player.dir_x * g->player.speed;
+		if (g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed)]\
+				[(int)(g->player.pos_x)] <= 19)
+			g->player.pos_y += g->player.dir_y * g->player.speed;
+	}
+	else if (DOWN)
+	{
+		if (g->map[(int)(g->player.pos_y)]\
+				[(int)(g->player.pos_x - g->player.dir_x * g->player.speed)] <= 19)
+			g->player.pos_x -= g->player.dir_x * g->player.speed;
+		if (g->map[(int)(g->player.pos_y - g->player.dir_y * g->player.speed)]\
+				[(int)(g->player.pos_x)] <= 19)
+			g->player.pos_y -= g->player.dir_y * g->player.speed;
+	}
 	buh(g);
-	// raycast_loop(g);
 	return (1);
 }
 

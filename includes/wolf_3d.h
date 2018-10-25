@@ -6,7 +6,7 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 14:09:45 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/10/02 16:18:24 by arusso           ###   ########.fr       */
+/*   Updated: 2018/10/20 16:05:52 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 # include <pthread.h>
 // # include "../SDL2-2.0.8/include/SDL.h"
 
-# define WIDTH 512
-# define HEIGHT 384
-# define WIDTH_UI 50
+# define WIDTH 640
+# define HEIGHT 480
+# define WIDTH_UI 100
 # define HEIGHT_UI 50
 # define THREAD 1
 # define SQUARE 16
@@ -31,9 +31,10 @@
 # define LEFT key == 123 || key == 0
 # define RIGHT key == 124 || key == 2
 # define ESCAPE key != 53
-# define FLOOR "textures/floor.xpm"
-# define WALL "textures/wall.xpm"
-# define CEILING "textures/ceiling.xpm"
+
+# define NB_FLOOR 1 //3
+# define NB_WALL 1 //4
+# define NB_CEILING 1
 
 typedef	struct s_point
 {
@@ -46,7 +47,7 @@ typedef	struct s_texture
 	int			x;
 	int			y;
 	void		*p_img;
-	char		*img_addr;
+	unsigned int	*img_addr;
 	int			bpp;
 	int			size;
 	int			endian;
@@ -60,6 +61,8 @@ typedef struct	s_player
 	long double	dir_y;
 	long double plane_x;
 	long double	plane_y;
+	long double	rot;
+	long double	speed;
 }				t_player;
 
 typedef	struct	s_color
@@ -89,20 +92,30 @@ typedef	struct	s_local
 	int			step_y;
 	int			hit;
 	int			side;
+	int			line_height;
+	long double	wall_x;
 }				t_local;
+
+typedef struct s_mini_map
+{
+	void		*p_img;
+	char		*img_addr;
+	int			bpp;
+	int			size;
+	int			endian;
+}				t_mini_map;
 
 typedef struct	s_global
 {
-	t_texture	wall;
-	t_texture	ceiling;
-	t_texture	floor;
+	t_texture	tex[3][4];
 	t_rayon		ray;
 	t_player	player;
+	t_mini_map	mini_map;
 	int			fd;
 	void 		*mlx;
 	void		*win;
 	void		*p_img;
-	char		*img_addr;
+	unsigned int *img_addr;
 	int			bpp;
 	int			size;
 	int			endian;
@@ -125,8 +138,6 @@ int				close_map(t_global *global, int key);
 int				deal_key(int key, t_global *global);
 void			draw_segment(float *coord_src, float *coord_dst, \
 															t_global *global);
-void			draw_white_square(int x, int y, t_global *global);
-void			draw_black_square(int x, int y, t_global *global);
 void			free_parse(int **wall, int len_array);
 int   			get_dir(t_global *g, int key);
 int    			get_pos(t_global *g, int key);
@@ -134,7 +145,7 @@ void			init_map(t_global *g);
 void			init_global(t_global *g);
 void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
 																	int color);
-// void			launch_mini_map(t_global *global);
+void			launch_mini_map(t_global *global);
 void			raycast_loop(int x, int end, t_global *g);
 void			texture(t_global *global);
 
