@@ -11,16 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/wolf_3d.h"
-/*
-static int	get_color(int id)
-   {
-   if (id == 2)
-   return (0x00990099);
-   if (id == 3)
-   return (0x00009900);
-   return (0x00FFFFFF);
-   }
-   */
 
 static int		get_thread_id(pthread_t id, pthread_t *thread)
 {
@@ -100,10 +90,7 @@ static void	draw_h(float *coord_src, float *coord_dest, t_global *g, t_local *l)
 
 	tex_type = 0;
 	tex_id = 0;
-	printf("g->ray.map_x = %d, g->ray.map_y = %d\n", g->ray.map_x, g->ray.map_y);
 	get_tex(g->map[g->ray.map_y][g->ray.map_x], &tex_type, &tex_id);
-	printf("%d\n", g->map[g->ray.map_y][g->ray.map_x]);
-	printf("tex_type = %d, tex_id = %d\n", tex_type, tex_id);
 	if (!(g->tex[tex_type][tex_id].p_img))
 		error("Error : texture doesn't exists.");
 	l->wall_x = (l->side == 0 ? \
@@ -191,9 +178,7 @@ void	buh(t_global *g)
 	while (++i < THREAD)
 		pthread_create(&g->thread[i], NULL, launch_thread, g);
 	i = -1;
-	printf("Bu !\n");
 	while (++i < THREAD)
 		pthread_join(g->thread[i], NULL);
 	mlx_put_image_to_window(g->mlx, g->win, g->p_img, 0, 0);
-	//mlx_put_image_to_window(g->mlx, g->win, g->tex[0][0].p_img, 0, 0);
 }

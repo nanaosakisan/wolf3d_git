@@ -22,10 +22,10 @@
 
 # define WIDTH 640
 # define HEIGHT 480
-# define WIDTH_UI 100
-# define HEIGHT_UI 50
+# define WIDTH_UI 400
+# define HEIGHT_UI 400
 # define THREAD 1
-# define SQUARE 16
+# define SQUARE 8
 # define UP key == 126 || key == 13
 # define DOWN key == 125 || key == 1
 # define LEFT key == 123 || key == 0

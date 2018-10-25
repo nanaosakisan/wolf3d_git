@@ -110,7 +110,8 @@ void		init_global(t_global *g)
 
 	i = -1;
 	g->mlx = mlx_init();
-	g->win = mlx_new_window(g->mlx, WIDTH, HEIGHT, g->name);
+	g->win = mlx_new_window(g->mlx, WIDTH, HEIGHT, \
+																	g->name);
 	g->time = 0;
 	g->old_time = 0;
 	g->color = 0xFFFFFF;

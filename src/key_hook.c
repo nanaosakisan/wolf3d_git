@@ -39,6 +39,7 @@ int		get_dir(t_global *g, int key)
 						: tmp_plane * sin(-g->player.rot) \
 						+ g->player.plane_y * cos(-g->player.rot);
 	buh(g);
+	launch_mini_map(g);
 	return (1);
 }
 
@@ -65,6 +66,7 @@ int		get_pos(t_global *g, int key)
 			g->player.pos_y -= g->player.dir_y * g->player.speed;
 	}
 	buh(g);
+	launch_mini_map(g);
 	return (1);
 }
 
