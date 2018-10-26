@@ -6,7 +6,7 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 14:09:45 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/10/20 16:05:52 by arusso           ###   ########.fr       */
+/*   Updated: 2018/10/25 18:04:04 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <pthread.h>
 // # include "../SDL2-2.0.8/include/SDL.h"
 
-# define WIDTH 640
-# define HEIGHT 480
+# define WIDTH 512
+# define HEIGHT 384
 # define WIDTH_UI 400
 # define HEIGHT_UI 400
 # define THREAD 1
@@ -33,7 +33,7 @@
 # define ESCAPE key != 53
 
 # define NB_FLOOR 1 //3
-# define NB_WALL 1 //4
+# define NB_WALL 4
 # define NB_CEILING 1
 
 typedef	struct s_point
@@ -128,6 +128,7 @@ typedef struct	s_global
 	int			color;
 	int			(*key_func[3])(struct s_global*, int);
 	int			len_key;
+	int			bonus_tex;
 	pthread_t	thread[THREAD];
 }				t_global;
 
@@ -136,8 +137,6 @@ int				check_map(t_global *g);
 void			check_start_pos(t_global *g);
 int				close_map(t_global *global, int key);
 int				deal_key(int key, t_global *global);
-void			draw_segment(float *coord_src, float *coord_dst, \
-															t_global *global);
 void			free_parse(int **wall, int len_array);
 int   			get_dir(t_global *g, int key);
 int    			get_pos(t_global *g, int key);
@@ -148,5 +147,6 @@ void			mlx_pixel_put_to_image(t_global *global, int x, int y, \
 void			launch_mini_map(t_global *global);
 void			raycast_loop(int x, int end, t_global *g);
 void			texture(t_global *global);
+int				close_mouse(int key, int x, int y, t_global *g);
 
 #endif

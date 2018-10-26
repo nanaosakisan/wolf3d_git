@@ -20,11 +20,11 @@ static void	draw_white_square(int x, int y, t_global *g)
 
 	len_x = x + SQUARE;
 	len_y = y + SQUARE;
-	while (x < WIDTH_UI && x <= len_x)
+	while (x < WIDTH && x <= len_x)
 	{
 		i = y - 1;
-		while (++i <= HEIGHT_UI && i <= len_y)
-			((int*)g->mini_map.img_addr)[(int)(x + i * WIDTH_UI)] = 0x00FFFFFF;
+		while (++i <= HEIGHT && i <= len_y)
+			((int*)g->mini_map.img_addr)[(int)(x + i * WIDTH)] = 0x00FFFFFF;
 		x++;
 	}
 }
@@ -49,16 +49,16 @@ void		launch_mini_map(t_global *g)
 	int i;
 	int j;
 
-	g->mini_map.p_img = mlx_new_image(g->mlx, WIDTH_UI, HEIGHT_UI);
+	g->mini_map.p_img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
 	g->mini_map.img_addr = mlx_get_data_addr(g->mini_map.p_img, \
 					&g->mini_map.bpp, &g->mini_map.size, &g->mini_map.endian);
-	// i = -1;
-	// while (i < WIDTH_UI)
-	// {
-	// 	j = -1;
-	// 	while (j < HEIGHT_UI)
-	// 		((int*)g->mini_map.img_addr)[(int)(i + j * WIDTH_UI)] = 0xFF000000;
-	// }
+	i = -1;
+	while (++i < WIDTH)
+	{
+		j = -1;
+		while (++j < HEIGHT)
+			((int*)g->mini_map.img_addr)[(int)(i + j * WIDTH)] = 0xFF000000;
+	}
 	i = -1;
 	while (++i < g->max_x)
 	{
