@@ -6,74 +6,38 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 17:53:25 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/10/25 14:04:23 by arusso           ###   ########.fr       */
+/*   Updated: 2018/10/26 11:46:30 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf_3d.h"
-/*
-   static void		init_textures(t_global *g)
-   {
-   if(!(g->wall.p_img = mlx_xpm_file_to_image(g->mlx, WALL, &g->wall.x, \
-   &g->wall.y)))
-   error("Error : no texture found for wall.");
-   g->wall.img_addr = mlx_get_data_addr(g->wall.p_img, &g->wall.bpp, \
-   &g->wall.size, &g->wall.endian);
-   if (!(g->floor.p_img = mlx_xpm_file_to_image(g->mlx, FLOOR, &g->floor.x, \
-   &g->floor.y)))
-   error("Error : no texture found for floor.");
-   g->floor.img_addr = mlx_get_data_addr(g->floor.p_img, &g->floor.bpp, \
-   &g->floor.size, &g->floor.endian);
-   if (!(g->ceiling.p_img = mlx_xpm_file_to_image(g->mlx, CEILING, \
-   &g->ceiling.x, &g->ceiling.y)))
-   error("Error : no texture found for ceiling.");
-   g->floor.img_addr = mlx_get_data_addr(g->ceiling.p_img, &g->ceiling.bpp, \
-   &g->ceiling.size, &g->ceiling.endian);
-   }
-   */
 
 static void	get_texture(t_global *g, int i, char *path, char *type)
 {
-	printf("path = %s\n", path);
 	if (ft_strequ(type, "wall"))
 	{
 		if (!(g->tex[1][i].p_img = mlx_xpm_file_to_image(g->mlx, path, \
-						&g->tex[1][i].x, &g->tex[1][i].y)))
+											&g->tex[1][i].x, &g->tex[1][i].y)))
 			error("Error : no texture found for wall.");
-		g->tex[1][i].img_addr = (unsigned int*)mlx_get_data_addr(g->tex[1]\
-				[i].p_img, &g->tex[1][i].bpp, &g->tex[1][i].size, &g->tex[1][i].endian);
+		g->tex[1][i].data = (unsigned int*)mlx_get_data_addr(g->tex[1]\
+		[i].p_img, &g->tex[1][i].bpp, &g->tex[1][i].size, &g->tex[1][i].endian);
 	}
 	else if (ft_strequ(type, "floor"))
 	{
 		if (!(g->tex[0][i].p_img = mlx_xpm_file_to_image(g->mlx, path, \
 						&g->tex[0][i].x, &g->tex[0][i].y)))
 			error("Error : no texture found for floor.");
-		g->tex[0][i].img_addr = (unsigned int*)mlx_get_data_addr(g->tex[0]\
-				[i].p_img, &g->tex[0][i].bpp, &g->tex[0][i].size, &g->tex[0][i].endian);
+		g->tex[0][i].data = (unsigned int*)mlx_get_data_addr(g->tex[0]\
+		[i].p_img, &g->tex[0][i].bpp, &g->tex[0][i].size, &g->tex[0][i].endian);
 	}
 	else
 	{
 		if (!(g->tex[2][i].p_img = mlx_xpm_file_to_image(g->mlx, path, \
-						&g->tex[2][i].x, &g->tex[2][i].y)))
+											&g->tex[2][i].x, &g->tex[2][i].y)))
 			error("Error : no texture found for ceiling.");
-		g->tex[2][i].img_addr = (unsigned int*)mlx_get_data_addr(g->tex[2]\
-				[i].p_img, &g->tex[2][i].bpp, &g->tex[2][i].size, &g->tex[2][i].endian);
+		g->tex[2][i].data = (unsigned int*)mlx_get_data_addr(g->tex[2]\
+		[i].p_img, &g->tex[2][i].bpp, &g->tex[2][i].size, &g->tex[2][i].endian);
 	}
-}
-
-static char	*get_path(int i, char *type)
-{
-	char	*path;
-	char	*tmp;
-
-	path = ft_strjoin("textures/", type);
-	tmp = path;
-	path = ft_strjoin(path, ft_itoa(i));
-	free(tmp);
-	tmp = path;
-	path = ft_strjoin(path, ".xpm");
-	free(tmp);
-	return (path);
 }
 
 static void	init_textures(t_global *g)
@@ -124,7 +88,7 @@ void		init_global(t_global *g)
 	init_textures(g);
 }
 
-char	**load_map(t_global *g)
+char		**load_map(t_global *g)
 {
 	char	**dest;
 	char	*line;
@@ -150,9 +114,8 @@ char	**load_map(t_global *g)
 	return (dest);
 }
 
-void	init_map(t_global *g)
+void		init_map(t_global *g)
 {
-
 	char	**c_map;
 	size_t	i;
 	size_t	len_tab;

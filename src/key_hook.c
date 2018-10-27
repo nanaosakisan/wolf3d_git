@@ -6,12 +6,22 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/08 17:52:01 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/10/25 19:32:26 by arusso           ###   ########.fr       */
+/*   Updated: 2018/10/27 15:46:11 by iporsenn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/wolf_3d.h"
+
+int		sprint(t_global *g, int key)
+{
+	if (!(SHIFT))
+		return (0);
+	if (g->player.speed == 0.1)
+		g->player.speed = 0.2;
+	else
+		g->player.speed = 0.1;
+	return (1);
+}
 
 int		get_dir(t_global *g, int key)
 {
@@ -22,23 +32,19 @@ int		get_dir(t_global *g, int key)
 		return (0);
 	tmp_dir = g->player.dir_x;
 	tmp_plane = g->player.plane_x;
-	g->player.dir_x = RIGHT ? g->player.dir_x * cos(g->player.rot)\
-					  - g->player.dir_y * sin(g->player.rot) \
-					  : g->player.dir_x * cos(-g->player.rot) \
-					  - g->player.dir_y * sin(-g->player.rot);
-	g->player.dir_y = RIGHT ? tmp_dir * sin(g->player.rot) \
-					  + g->player.dir_y * cos(g->player.rot) \
-					  : tmp_dir * sin(-g->player.rot) \
-					  + g->player.dir_y * cos(-g->player.rot);
-	g->player.plane_x = RIGHT ? g->player.plane_x * cos(g->player.rot) \
-						- g->player.plane_y * sin(g->player.rot) \
-						: g->player.plane_x * cos(-g->player.rot) \
-						- g->player.plane_y * sin(-g->player.rot);
-	g->player.plane_y = RIGHT ? tmp_plane * sin(g->player.rot) \
-						+ g->player.plane_y * cos(g->player.rot) \
-						: tmp_plane * sin(-g->player.rot) \
-						+ g->player.plane_y * cos(-g->player.rot);
-	buh(g);
+	g->player.dir_x = RIGHT ? g->player.dir_x * cos(g->player.rot) - \
+					g->player.dir_y * sin(g->player.rot) : g->player.dir_x * \
+					cos(-g->player.rot) - g->player.dir_y * sin(-g->player.rot);
+	g->player.dir_y = RIGHT ? tmp_dir * sin(g->player.rot) + g->player.dir_y * \
+		cos(g->player.rot) : tmp_dir * sin(-g->player.rot) + g->player.dir_y * \
+															cos(-g->player.rot);
+	g->player.plane_x = RIGHT ? g->player.plane_x * cos(g->player.rot) - \
+				g->player.plane_y * sin(g->player.rot) : g->player.plane_x * \
+				cos(-g->player.rot) - g->player.plane_y * sin(-g->player.rot);
+	g->player.plane_y = RIGHT ? tmp_plane * sin(g->player.rot) + \
+	g->player.plane_y * cos(g->player.rot) : tmp_plane * sin(-g->player.rot) \
+									+ g->player.plane_y * cos(-g->player.rot);
+	start_wolf(g);
 	launch_mini_map(g);
 	return (1);
 }
@@ -49,42 +55,39 @@ int		get_pos(t_global *g, int key)
 		return (0);
 	if (UP)
 	{
-		if (g->map[(int)(g->player.pos_y)]\
-				[(int)(g->player.pos_x + g->player.dir_x * g->player.speed)] <= 19)
+		if (g->map[(int)(g->player.pos_y)][(int)(g->player.pos_x + \
+									g->player.dir_x * g->player.speed)] <= 19)
 			g->player.pos_x += g->player.dir_x * g->player.speed;
 		if (g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed)]\
-				[(int)(g->player.pos_x)] <= 19)
+												[(int)(g->player.pos_x)] <= 19)
 			g->player.pos_y += g->player.dir_y * g->player.speed;
 	}
 	else if (DOWN)
 	{
-		if (g->map[(int)(g->player.pos_y)]\
-				[(int)(g->player.pos_x - g->player.dir_x * g->player.speed)] <= 19)
+		if (g->map[(int)(g->player.pos_y)][(int)(g->player.pos_x - \
+									g->player.dir_x * g->player.speed)] <= 19)
 			g->player.pos_x -= g->player.dir_x * g->player.speed;
 		if (g->map[(int)(g->player.pos_y - g->player.dir_y * g->player.speed)]\
-				[(int)(g->player.pos_x)] <= 19)
+												[(int)(g->player.pos_x)] <= 19)
 			g->player.pos_y -= g->player.dir_y * g->player.speed;
 	}
-	buh(g);
+	start_wolf(g);
 	launch_mini_map(g);
 	return (1);
 }
 
-int		close_mouse(int key, int x, int y, t_global *g)
+int		close_mouse(int key, t_global *g)
 {
+	(void)key;
 	(void)g;
-	printf("key = %d, x = %d, y = %d\n", key, x, y);
-	//if (key == 1 && (x >= 0 && x <= 20) && (y >= -20 && y <= 0))
-	if (key == 1)
-		exit(1);
+	exit(1);
 	return (0);
 }
 
 int		close_map(t_global *g, int key)
 {
-	if (ESCAPE)
+	if (ESCAPE || !g)
 		return (0);
-	free_parse(g->map, g->max_y);
 	exit(EXIT_SUCCESS);
 }
 
@@ -93,7 +96,7 @@ int		deal_key(int key, t_global *g)
 	int i;
 
 	i = 0;
-	while ((i < g->len_key) && !g->key_func[i](g, key))
+	while ((i < MAX_FUNC) && !g->key_func[i](g, key))
 		i++;
 	return (0);
 }
