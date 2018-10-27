@@ -12,14 +12,16 @@
 
 #include "../includes/wolf_3d.h"
 
-int		sprint(t_global *g, int key)
+int		change_tex(t_global *g, int key)
 {
-	if (!(SHIFT))
+	if (!(T))
 		return (0);
-	if (g->player.speed == 0.1)
-		g->player.speed = 0.2;
+	if (g->bonus_tex == 0)
+		g->bonus_tex = 1;
 	else
-		g->player.speed = 0.1;
+		g->bonus_tex = 0;
+	start_wolf(g);
+	launch_mini_map(g);
 	return (1);
 }
 
@@ -55,20 +57,20 @@ int		get_pos(t_global *g, int key)
 		return (0);
 	if (UP)
 	{
-		if (g->map[(int)(g->player.pos_y)][(int)(g->player.pos_x + \
-									g->player.dir_x * g->player.speed)] <= 19)
+		if (g->map[(int)(g->player.pos_y)][(int)(g->player.pos_x \
+					+ g->player.dir_x * g->player.speed * 2)] <= 19)
 			g->player.pos_x += g->player.dir_x * g->player.speed;
-		if (g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed)]\
-												[(int)(g->player.pos_x)] <= 19)
+		if (g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed * 2)]\
+				[(int)(g->player.pos_x)] <= 19)
 			g->player.pos_y += g->player.dir_y * g->player.speed;
 	}
 	else if (DOWN)
 	{
-		if (g->map[(int)(g->player.pos_y)][(int)(g->player.pos_x - \
-									g->player.dir_x * g->player.speed)] <= 19)
+		if (g->map[(int)(g->player.pos_y)][(int)(g->player.pos_x \
+					- g->player.dir_x * g->player.speed * 2)] <= 19)
 			g->player.pos_x -= g->player.dir_x * g->player.speed;
-		if (g->map[(int)(g->player.pos_y - g->player.dir_y * g->player.speed)]\
-												[(int)(g->player.pos_x)] <= 19)
+		if (g->map[(int)(g->player.pos_y - g->player.dir_y * g->player.speed * 2)]\
+				[(int)(g->player.pos_x)] <= 19)
 			g->player.pos_y -= g->player.dir_y * g->player.speed;
 	}
 	start_wolf(g);
@@ -86,7 +88,7 @@ int		close_mouse(int key, t_global *g)
 
 int		close_map(t_global *g, int key)
 {
-	if (ESCAPE || !g)
+	if (!(ESCAPE) || !g)
 		return (0);
 	exit(EXIT_SUCCESS);
 }

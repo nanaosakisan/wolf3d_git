@@ -14,40 +14,40 @@
 
 static void	init_ray(t_global *g, t_local *l, int x)
 {
-	g->ray.map_x = (int)g->player.pos_x;
-	g->ray.map_y = (int)g->player.pos_y;
+	l->ray.map_x = (int)g->player.pos_x;
+	l->ray.map_y = (int)g->player.pos_y;
 	l->cam_x = 2 * x / (long double)WIDTH - 1;
-	g->ray.dir_x = g->player.dir_x + g->player.plane_x * l->cam_x;
-	g->ray.dir_y = g->player.dir_y + g->player.plane_y * l->cam_x;
-	g->ray.delta_x = sqrt(1 + (g->ray.dir_y * g->ray.dir_y) / \
-			(g->ray.dir_x * g->ray.dir_x));
-	g->ray.delta_y = sqrt(1 + (g->ray.dir_x * g->ray.dir_x) / \
-			(g->ray.dir_y * g->ray.dir_y));
-	l->step_x = (g->ray.dir_x < 0) ? -1 : 1;
-	g->ray.sidedist_x = (g->ray.dir_x < 0) ? \
-			((g->player.pos_x - g->ray.map_x) * g->ray.delta_x) \
-			: ((g->ray.map_x + 1.0 - g->player.pos_x) * g->ray.delta_x);
-	l->step_y = (g->ray.dir_y < 0) ? -1 : 1;
-	g->ray.sidedist_y = (g->ray.dir_y < 0) ? \
-				((g->player.pos_y - g->ray.map_y) * g->ray.delta_y) \
-				: ((g->ray.map_y + 1.0 - g->player.pos_y) * g->ray.delta_y);
+	l->ray.dir_x = g->player.dir_x + g->player.plane_x * l->cam_x;
+	l->ray.dir_y = g->player.dir_y + g->player.plane_y * l->cam_x;
+	l->ray.delta_x = sqrt(1 + (l->ray.dir_y * l->ray.dir_y) / \
+			(l->ray.dir_x * l->ray.dir_x));
+	l->ray.delta_y = sqrt(1 + (l->ray.dir_x * l->ray.dir_x) / \
+			(l->ray.dir_y * l->ray.dir_y));
+	l->step_x = (l->ray.dir_x < 0) ? -1 : 1;
+	l->ray.sidedist_x = (l->ray.dir_x < 0) ? \
+			((g->player.pos_x - l->ray.map_x) * l->ray.delta_x) \
+			: ((l->ray.map_x + 1.0 - g->player.pos_x) * l->ray.delta_x);
+	l->step_y = (l->ray.dir_y < 0) ? -1 : 1;
+	l->ray.sidedist_y = (l->ray.dir_y < 0) ? \
+				((g->player.pos_y - l->ray.map_y) * l->ray.delta_y) \
+				: ((l->ray.map_y + 1.0 - g->player.pos_y) * l->ray.delta_y);
 }
 
 static void	loop(t_global *g, t_local *l)
 {
-	if (g->ray.sidedist_x < g->ray.sidedist_y)
+	if (l->ray.sidedist_x < l->ray.sidedist_y)
 	{
-		g->ray.sidedist_x += g->ray.delta_x;
-		g->ray.map_x += l->step_x;
+		l->ray.sidedist_x += l->ray.delta_x;
+		l->ray.map_x += l->step_x;
 		l->side = 0;
 	}
 	else
 	{
-		g->ray.sidedist_y += g->ray.delta_y;
-		g->ray.map_y += l->step_y;
+		l->ray.sidedist_y += l->ray.delta_y;
+		l->ray.map_y += l->step_y;
 		l->side = 1;
 	}
-	if (g->map[g->ray.map_y][g->ray.map_x] > 19)
+	if (g->map[l->ray.map_y][l->ray.map_x] > 19)
 		l->hit = 1;
 }
 

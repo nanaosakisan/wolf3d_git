@@ -81,7 +81,8 @@ void		init_global(t_global *g)
 	g->key_func[0] = &close_map;
 	g->key_func[1] = &get_dir;
 	g->key_func[2] = &get_pos;
-	g->len_key = 3;
+	g->key_func[3] = &sprint;
+	g->key_func[4] = &change_tex;
 	g->bonus_tex = 0;
 	while (++i < THREAD)
 		g->thread[i] = 0;

@@ -14,23 +14,23 @@
 
 static void	get_tex_bonus(t_global *g, t_local *l)
 {
-	if (g->map[g->ray.map_y][g->ray.map_x] >= 10 && \
-			g->map[g->ray.map_y][g->ray.map_x] < 20)
+	if (g->map[l->ray.map_y][l->ray.map_x] >= 10 && \
+			g->map[l->ray.map_y][l->ray.map_x] < 20)
 	{
 		l->t_type = 0;
-		l->t_id = g->map[g->ray.map_y][g->ray.map_x] - 10;
+		l->t_id = g->map[l->ray.map_y][l->ray.map_x] - 10;
 	}
-	else if (g->map[g->ray.map_y][g->ray.map_x] >= 20 && \
-			g->map[g->ray.map_y][g->ray.map_x] < 30)
+	else if (g->map[l->ray.map_y][l->ray.map_x] >= 20 && \
+			g->map[l->ray.map_y][l->ray.map_x] < 30)
 	{
 		l->t_type = 1;
-		l->t_id = g->map[g->ray.map_y][g->ray.map_x] - 20;
+		l->t_id = g->map[l->ray.map_y][l->ray.map_x] - 20;
 	}
-	else if (g->map[g->ray.map_y][g->ray.map_x] >= 30 && \
-			g->map[g->ray.map_y][g->ray.map_x] < 40)
+	else if (g->map[l->ray.map_y][l->ray.map_x] >= 30 && \
+			g->map[l->ray.map_y][l->ray.map_x] < 40)
 	{
 		l->t_type = 2;
-		l->t_id = g->map[g->ray.map_y][g->ray.map_x] - 30;
+		l->t_id = g->map[l->ray.map_y][l->ray.map_x] - 30;
 	}
 }
 
@@ -41,11 +41,11 @@ static void	get_tex(t_global *g, t_local *l)
 	else
 	{
 		l->t_type = 1;
-		if (l->side == 0 && g->ray.dir_x > 0)
+		if (l->side == 0 && l->ray.dir_x > 0)
 			l->t_id = 0;
-		else if (l->side == 0 && g->ray.dir_x <= 0)
+		else if (l->side == 0 && l->ray.dir_x <= 0)
 			l->t_id = 1;
-		else if (l->side == 1 && g->ray.dir_y > 0)
+		else if (l->side == 1 && l->ray.dir_y > 0)
 			l->t_id = 2;
 		else
 			l->t_id = 3;
@@ -54,7 +54,7 @@ static void	get_tex(t_global *g, t_local *l)
 
 static void	draw_wall(float *start, float *end, t_global *g, t_local *l)
 {
-	int	y;
+	int				y;
 
 	l->t_type = 0;
 	l->t_id = 0;
@@ -62,12 +62,12 @@ static void	draw_wall(float *start, float *end, t_global *g, t_local *l)
 	if (!(g->tex[l->t_type][l->t_id].p_img))
 		error("Error : texture doesn't exists.");
 	l->wall_x = (l->side == 0 ? \
-			g->ray.w_dist * g->ray.dir_y + g->player.pos_y \
-			: g->ray.w_dist * g->ray.dir_x + g->player.pos_x);
+			l->ray.w_dist * l->ray.dir_y + g->player.pos_y \
+			: l->ray.w_dist * l->ray.dir_x + g->player.pos_x);
 	l->wall_x -= floor(l->wall_x);
 	l->t_x = (int)(l->wall_x * (double)(g->tex[l->t_type][l->t_id].x));
-	if ((l->side == 0 && g->ray.dir_x > 0) \
-			|| (l->side == 1 && g->ray.dir_y < 0))
+	if ((l->side == 0 && l->ray.dir_x > 0) \
+			|| (l->side == 1 && l->ray.dir_y < 0))
 		l->t_x = g->tex[l->t_type][l->t_id].x - l->t_x - 1;
 	y = start[0] - 1;
 	while (++y < end[0])
@@ -79,11 +79,10 @@ static void	draw_wall(float *start, float *end, t_global *g, t_local *l)
 	}
 }
 
-static void	loop_floor_ceiling(float *end, t_global *g, t_local *l, \
-															int y)
+static void	loop_floor_ceiling(float *end, t_global *g, t_local *l, int y)
 {
 		l->cur_dist = HEIGHT / (2.0 * y - HEIGHT);
-		l->cur_pos = (l->cur_dist - l->pl_dist) / (g->ray.w_dist - l->pl_dist);
+		l->cur_pos = (l->cur_dist - l->pl_dist) / (l->ray.w_dist - l->pl_dist);
 		l->cur_x = l->cur_pos * l->wall_pos_x + \
 				   (1.0 - l->cur_pos) * g->player.pos_x;
 		l->cur_y = l->cur_pos * l->wall_pos_y + \
@@ -98,21 +97,20 @@ static void	loop_floor_ceiling(float *end, t_global *g, t_local *l, \
 			= g->tex[2][0].data[l->t_x + (l->t_y * g->tex[2][0].x)];
 }
 
-static void	draw_floor_ceiling(float *end, t_global *g, \
-		t_local *l)
+static void	draw_floor_ceiling(float *end, t_global *g, t_local *l)
 {
 	int		y;
 
-	l->wall_pos_x = g->ray.map_x + (l->side == 1 ? l->wall_x : 0);
-	l->wall_pos_y = g->ray.map_y + (l->side == 0 ? l->wall_x : 0);
-	if (l->side == 0 && g->ray.dir_x > 0)
-		l->wall_pos_x = g->ray.map_x;
-	else if (l->side == 0 && g->ray.dir_x < 0)
-		l->wall_pos_x = g->ray.map_x + 1.0;
-	else if (l->side == 1 && g->ray.dir_y > 0)
-		l->wall_pos_y = g->ray.map_y;
+	l->wall_pos_x = l->ray.map_x + (l->side == 1 ? l->wall_x : 0);
+	l->wall_pos_y = l->ray.map_y + (l->side == 0 ? l->wall_x : 0);
+	if (l->side == 0 && l->ray.dir_x > 0)
+		l->wall_pos_x = l->ray.map_x;
+	else if (l->side == 0 && l->ray.dir_x < 0)
+		l->wall_pos_x = l->ray.map_x + 1.0;
+	else if (l->side == 1 && l->ray.dir_y > 0)
+		l->wall_pos_y = l->ray.map_y;
 	else
-		l->wall_pos_y = g->ray.map_y + 1.0;
+		l->wall_pos_y = l->ray.map_y + 1.0;
 	l->pl_dist = 0.0;
 	y = end[0];
 	while (++y < HEIGHT)
@@ -121,13 +119,13 @@ static void	draw_floor_ceiling(float *end, t_global *g, \
 
 void		set_coord(t_global *g, t_local *l, int x)
 {
-	float		start[2];
-	float		end[2];
+	float			start[2];
+	float			end[2];
 
-	g->ray.w_dist = (l->side == 0) ? \
-		(g->ray.map_x - g->player.pos_x + (1 - l->step_x) / 2) / g->ray.dir_x \
-		: (g->ray.map_y - g->player.pos_y + (1 - l->step_y) / 2) / g->ray.dir_y;
-	l->line_height = (int)(HEIGHT / g->ray.w_dist);
+	l->ray.w_dist = (l->side == 0) ? \
+		(l->ray.map_x - g->player.pos_x + (1 - l->step_x) / 2) / l->ray.dir_x \
+		: (l->ray.map_y - g->player.pos_y + (1 - l->step_y) / 2) / l->ray.dir_y;
+	l->line_height = (int)(HEIGHT / l->ray.w_dist);
 	start[0] = (float)(-l->line_height / 2 + HEIGHT / 2);
 	start[0] = (start[0] < 0) ? 0 : start[0];
 	end[0] = (float)(l->line_height / 2 + HEIGHT / 2);

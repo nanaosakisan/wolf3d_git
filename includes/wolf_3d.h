@@ -19,17 +19,18 @@
 # include <stdio.h>
 # include <pthread.h>
 
-# define WIDTH 640
-# define HEIGHT 480
-# define THREAD 1
-# define MAX_FUNC 4
+# define WIDTH 1200
+# define HEIGHT 900
+# define THREAD 4
+# define MAX_FUNC 5
 # define SQUARE 4
 # define UP key == 126 || key == 13
 # define DOWN key == 125 || key == 1
 # define LEFT key == 123 || key == 0
 # define RIGHT key == 124 || key == 2
-# define SHIFT key = 56 || key == 60
-# define ESCAPE key != 53
+# define SHIFT key == 257 || key == 258
+# define T key == 17
+# define ESCAPE key == 53
 
 # define NB_FLOOR 1
 # define NB_WALL 4
@@ -86,6 +87,7 @@ typedef struct		s_rayon
 
 typedef	struct		s_local
 {
+	t_rayon			ray;
 	long double		cam_x;
 	int				step_x;
 	int				step_y;
@@ -121,7 +123,6 @@ typedef struct		s_mini_map
 typedef struct		s_global
 {
 	t_texture		tex[3][4];
-	t_rayon			ray;
 	t_player		player;
 	t_mini_map		mini_map;
 	int				fd;
@@ -140,15 +141,16 @@ typedef struct		s_global
 	long			old_time;
 	int				color;
 	int				(*key_func[MAX_FUNC])(struct s_global*, int);
-	int				len_key;
 	int				bonus_tex;
 	pthread_t		thread[THREAD];
 }					t_global;
 
 void				start_wolf(t_global *g);
+int					change_tex(t_global *g, int key);
 int					check_map(t_global *g);
 void				check_start_pos(t_global *g);
 int					close_map(t_global *global, int key);
+int					close_mouse(int key, t_global *g);
 int					deal_key(int key, t_global *global);
 void				free_parse(int **wall, int len_array);
 int					get_dir(t_global *g, int key);
@@ -162,6 +164,6 @@ void				mlx_pixel_put_to_image(t_global *global, int x, int y, \
 void				launch_mini_map(t_global *global);
 void				set_coord(t_global *g, t_local *l, int x);
 void				texture(t_global *global);
-int					close_mouse(int key, t_global *g);
+int					sprint(t_global *g, int key);
 
 #endif

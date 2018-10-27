@@ -36,3 +36,14 @@ int		get_thread_id(pthread_t id, pthread_t *thread)
 		i++;
 	return (i);
 }
+
+int		sprint(t_global *g, int key)
+{
+	if (!(SHIFT))
+		return (0);
+	if (g->player.speed == 0.1)
+		g->player.speed = 0.2;
+	else
+		g->player.speed = 0.1;
+	return (1);
+}
