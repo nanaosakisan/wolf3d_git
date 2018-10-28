@@ -19,7 +19,7 @@
 # include <stdio.h>
 # include <pthread.h>
 
-# define WIDTH 1200
+# define WIDTH 1600
 # define HEIGHT 900
 # define THREAD 4
 # define MAX_FUNC 5
@@ -120,11 +120,20 @@ typedef struct		s_mini_map
 	int				endian;
 }					t_mini_map;
 
+typedef struct		s_input
+{
+	int				up;
+	int				down;
+	int				left;
+	int				right;
+}					t_input;
+
 typedef struct		s_global
 {
 	t_texture		tex[3][4];
 	t_player		player;
 	t_mini_map		mini_map;
+	t_input			input;
 	int				fd;
 	void			*mlx;
 	void			*win;
@@ -145,17 +154,12 @@ typedef struct		s_global
 	pthread_t		thread[THREAD];
 }					t_global;
 
-void				start_wolf(t_global *g);
-int					change_tex(t_global *g, int key);
+int					start_wolf(t_global *g);
 int					check_map(t_global *g);
 void				check_start_pos(t_global *g);
-int					close_map(t_global *global, int key);
-int					close_mouse(int key, t_global *g);
 int					deal_key(int key, t_global *global);
-void				free_parse(int **wall, int len_array);
-int					get_dir(t_global *g, int key);
+int					deal_key_release(int key, t_global *g);
 char				*get_path(int i, char *type);
-int					get_pos(t_global *g, int key);
 int					get_thread_id(pthread_t id, pthread_t *thread);
 void				init_map(t_global *g);
 void				init_global(t_global *g);
@@ -164,6 +168,7 @@ void				mlx_pixel_put_to_image(t_global *global, int x, int y, \
 void				launch_mini_map(t_global *global);
 void				set_coord(t_global *g, t_local *l, int x);
 void				texture(t_global *global);
-int					sprint(t_global *g, int key);
+void				update_input(t_global *g);
+int					key_hook(int key, t_global *g);
 
 #endif

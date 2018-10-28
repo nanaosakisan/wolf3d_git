@@ -65,8 +65,8 @@ void	init_player(t_global *g, char *line)
 	g->player.dir_y = 0;
 	g->player.plane_x = 0;
 	g->player.plane_y = 0.66;
-	g->player.rot = 0.06;
-	g->player.speed = 0.1;
+	g->player.rot = 0.021;
+	g->player.speed = 0.05;
 }
 
 int		check_lines(char **line)

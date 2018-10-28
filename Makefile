@@ -35,7 +35,7 @@ HEADER_PATH = minilibx_macos/
 HEADER_NAME = libmlx.a
 HEADER = $(addprefix $(HEADER_PATH), $(HEADER_NAME))
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra -g3
 # -fsanitize=address
 FLAGS_LIBX = -lmlx -framework OpenGL -framework AppKit -lpthread -D_REENTRANT
 

@@ -82,11 +82,12 @@ static void	*launch_thread(void *data)
 	pthread_exit(NULL);
 }
 
-void		start_wolf(t_global *g)
+int			start_wolf(t_global *g)
 {
 	int i;
 
 	i = -1;
+	update_input(g);
 	if (g->p_img)
 		mlx_destroy_image(g->mlx, g->p_img);
 	g->p_img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
@@ -98,4 +99,6 @@ void		start_wolf(t_global *g)
 	while (++i < THREAD)
 		pthread_join(g->thread[i], NULL);
 	mlx_put_image_to_window(g->mlx, g->win, g->p_img, 0, 0);
+	launch_mini_map(g);
+	return (0);
 }

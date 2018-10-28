@@ -37,13 +37,21 @@ int		get_thread_id(pthread_t id, pthread_t *thread)
 	return (i);
 }
 
-int		sprint(t_global *g, int key)
+int		key_hook(int key, t_global *g)
 {
-	if (!(SHIFT))
-		return (0);
-	if (g->player.speed == 0.1)
-		g->player.speed = 0.2;
-	else
-		g->player.speed = 0.1;
-	return (1);
+	if (SHIFT)
+	{
+		if (g->player.speed == 0.05)
+			g->player.speed = 0.2;
+		else
+			g->player.speed = 0.05;
+	}
+	if (T)
+	{
+		if (g->bonus_tex == 0)
+			g->bonus_tex = 1;
+		else
+			g->bonus_tex = 0;
+	}
+	return (0);
 }
