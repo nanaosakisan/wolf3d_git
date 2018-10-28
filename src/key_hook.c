@@ -107,5 +107,19 @@ int		deal_key(int key, t_global *g)
 		g->input.left = 1;
 	if (RIGHT)
 		g->input.right = 1;
+	if (SHIFT)
+	{
+		if (g->player.speed == 0.05)
+			g->player.speed = 0.2;
+		else
+			g->player.speed = 0.05;
+	}
+	if (T)
+	{
+		if (g->bonus_tex == 0)
+			g->bonus_tex = 1;
+		else
+			g->bonus_tex = 0;
+	}
 	return (0);
 }

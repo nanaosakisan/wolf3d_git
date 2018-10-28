@@ -90,6 +90,8 @@ int			start_wolf(t_global *g)
 	update_input(g);
 	if (g->p_img)
 		mlx_destroy_image(g->mlx, g->p_img);
+	if (g->mini_map.p_img)
+		mlx_destroy_image(g->mlx, g->mini_map.p_img);
 	g->p_img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
 	g->data = (unsigned int*)mlx_get_data_addr(g->p_img, &g->bpp, \
 			&g->size, &g->endian);

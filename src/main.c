@@ -34,7 +34,7 @@ int			main(int ac, char **av)
 	init_global(g);
 	init_map(g);
 	mlx_hook(g->win, 2, (1L << 0), deal_key, g);
-	mlx_key_hook(g->win, key_hook, g);
+	// mlx_key_hook(g->win, key_hook, g);
 	mlx_hook(g->win, 3, (1L << 1), deal_key_release, g);
 	mlx_hook(g->win, 17, 1, close_mouse, g);
 	mlx_loop_hook(g->mlx, &start_wolf, g);
