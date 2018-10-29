@@ -53,16 +53,15 @@ static void	loop(t_global *g, t_local *l)
 
 static void	raycast_loop(int x, int end, t_global *g)
 {
-	t_local	*l;
+	t_local	l;
 
-	l = (t_local*)malloc(sizeof(t_local));
 	while (x < WIDTH && x < end)
 	{
-		init_ray(g, l, x);
-		l->hit = 0;
-		while (l->hit == 0)
-			loop(g, l);
-		set_coord(g, l, x);
+		init_ray(g, &l, x);
+		l.hit = 0;
+		while (l.hit == 0)
+			loop(g, &l);
+		set_coord(g, &l, x);
 		x++;
 	}
 }

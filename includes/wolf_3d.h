@@ -21,8 +21,7 @@
 
 # define WIDTH 1600
 # define HEIGHT 900
-# define THREAD 4
-# define MAX_FUNC 5
+# define THREAD 8
 # define SQUARE 4
 # define UP key == 126 || key == 13
 # define DOWN key == 125 || key == 1
@@ -146,10 +145,6 @@ typedef struct		s_global
 	int				**map;
 	int				max_x;
 	int				max_y;
-	long			time;
-	long			old_time;
-	int				color;
-	int				(*key_func[MAX_FUNC])(struct s_global*, int);
 	int				bonus_tex;
 	pthread_t		thread[THREAD];
 }					t_global;
@@ -169,6 +164,5 @@ void				launch_mini_map(t_global *global);
 void				set_coord(t_global *g, t_local *l, int x);
 void				texture(t_global *global);
 void				update_input(t_global *g);
-int					key_hook(int key, t_global *g);
 
 #endif

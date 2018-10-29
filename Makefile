@@ -39,7 +39,7 @@ FLAGS = -Wall -Werror -Wextra -g3
 # -fsanitize=address
 FLAGS_LIBX = -lmlx -framework OpenGL -framework AppKit -lpthread -D_REENTRANT
 
-.PHONY: all, build, creadir, clean, fclean, rebuild, re
+.PHONY: all, build, creadir, clean, fclean, lib, re
 
 all: lib $(SDL) $(NAME)
 
@@ -48,7 +48,7 @@ $(NAME):	creadir $(OBJ)
 	@echo "\033[32mExe built\033[0m"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@gcc $(FLAGS) -o $@ -c $<
+	@gcc $(FLAGS) -o $@ -c $< 
 
 build : creadir
 	@gcc $(FLAGS) $(FLAGS_LIBX) $(SRC) ./libft/libft.a $(HEADER) -o $(NAME)

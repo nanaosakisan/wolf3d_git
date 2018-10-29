@@ -16,11 +16,14 @@ char	*get_path(int i, char *type)
 {
 	char	*path;
 	char	*tmp;
+	char	*tmp_2;
 
 	path = ft_strjoin("textures/", type);
 	tmp = path;
-	path = ft_strjoin(path, ft_itoa(i));
+	tmp_2 = ft_itoa(i);
+	path = ft_strjoin(path, tmp_2);
 	free(tmp);
+	free(tmp_2);
 	tmp = path;
 	path = ft_strjoin(path, ".xpm");
 	free(tmp);

@@ -50,21 +50,21 @@ static void	init_textures(t_global *g)
 	{
 		path = get_path(i, "wall");
 		get_texture(g, i, path, "wall");
-		free(path);
+		ft_strdel(&path);
 	}
 	i = -1;
 	while (++i < NB_FLOOR)
 	{
 		path = get_path(i, "floor");
 		get_texture(g, i, path, "floor");
-		free(path);
+		ft_strdel(&path);
 	}
 	i = -1;
 	while (++i < NB_CEILING)
 	{
 		path = get_path(i, "ceiling");
 		get_texture(g, i, path, "ceiling");
-		free(path);
+		ft_strdel(&path);
 	}
 }
 
@@ -75,9 +75,6 @@ void		init_global(t_global *g)
 	i = -1;
 	g->mlx = mlx_init();
 	g->win = mlx_new_window(g->mlx, WIDTH, HEIGHT, g->name);
-	g->time = 0;
-	g->old_time = 0;
-	g->color = 0xFFFFFF;
 	g->bonus_tex = 0;
 	while (++i < THREAD)
 		g->thread[i] = 0;
@@ -103,6 +100,7 @@ char		**load_map(t_global *g)
 		if (ret == -1)
 			error("Nope.");
 		dest[i] = ft_strdup(line);
+		ft_strdel(&line);
 		i++;
 	}
 	dest[i] = NULL;
