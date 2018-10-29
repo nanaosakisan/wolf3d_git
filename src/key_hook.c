@@ -98,7 +98,10 @@ int		deal_key_release(int key, t_global *g)
 int		deal_key(int key, t_global *g)
 {
 	if (ESCAPE)
+	{
+		system("killall afplay");
 		exit(EXIT_SUCCESS);
+	}
 	if (UP)
 		g->input.up = 1;
 	if (DOWN)
@@ -108,18 +111,8 @@ int		deal_key(int key, t_global *g)
 	if (RIGHT)
 		g->input.right = 1;
 	if (SHIFT)
-	{
-		if (g->player.speed == 0.05)
-			g->player.speed = 0.2;
-		else
-			g->player.speed = 0.05;
-	}
+		g->player.speed = (g->player.speed == 0.05) ? 0.2 : 0.05;
 	if (T)
-	{
-		if (g->bonus_tex == 0)
-			g->bonus_tex = 1;
-		else
-			g->bonus_tex = 0;
-	}
+		g->bonus_tex = (g->bonus_tex == 0) ? 1 : 0;
 	return (0);
 }

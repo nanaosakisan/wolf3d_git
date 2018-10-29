@@ -16,6 +16,7 @@ static int	close_mouse(int key, t_global *g)
 {
 	(void)key;
 	(void)g;
+	system("killall afplay");
 	exit(1);
 	return (0);
 }
@@ -33,6 +34,7 @@ int			main(int ac, char **av)
 		error("Error : unvalid map file or map file doesn't exist.");
 	init_global(g);
 	init_map(g);
+	system("afplay ./sounds/hush.mp3 &");
 	mlx_hook(g->win, 2, (1L << 0), deal_key, g);
 	mlx_hook(g->win, 3, (1L << 1), deal_key_release, g);
 	mlx_hook(g->win, 17, 1, close_mouse, g);
