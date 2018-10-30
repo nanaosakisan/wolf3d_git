@@ -30,7 +30,7 @@ static int	move_left(t_global *g)
 	return (1);
 }
 
-static int move_right(t_global *g)
+static int	move_right(t_global *g)
 {
 	long double tmp_dir;
 	long double tmp_plane;
@@ -59,7 +59,7 @@ static int	move_up(t_global *g)
 	return (1);
 }
 
-static int move_down(t_global *g)
+static int	move_down(t_global *g)
 {
 	if (g->map[(int)(g->player.pos_y)][(int)(g->player.pos_x \
 				- g->player.dir_x * g->player.speed * 2)] <= 19)
@@ -80,39 +80,4 @@ void	update_input(t_global *g)
 		move_right(g);
 	if (g->input.left)
 		move_left(g);
-}
-
-int		deal_key_release(int key, t_global *g)
-{
-	if (UP)
-		g->input.up = 0;
-	if (DOWN)
-		g->input.down = 0;
-	if (LEFT)
-		g->input.left = 0;
-	if (RIGHT)
-		g->input.right = 0;
-	return (0);
-}
-
-int		deal_key(int key, t_global *g)
-{
-	if (ESCAPE)
-	{
-		system("killall afplay");
-		exit(EXIT_SUCCESS);
-	}
-	if (UP)
-		g->input.up = 1;
-	if (DOWN)
-		g->input.down = 1;
-	if (LEFT)
-		g->input.left = 1;
-	if (RIGHT)
-		g->input.right = 1;
-	if (SHIFT)
-		g->player.speed = (g->player.speed == 0.05) ? 0.2 : 0.05;
-	if (T)
-		g->bonus_tex = (g->bonus_tex == 0) ? 1 : 0;
-	return (0);
 }

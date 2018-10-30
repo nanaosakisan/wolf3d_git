@@ -39,3 +39,32 @@ int		get_thread_id(pthread_t id, pthread_t *thread)
 		i++;
 	return (i);
 }
+
+void	free_tmp(int **tmp, int i)
+{
+	while (--i > -1)
+		free(tmp[i]);
+	free(tmp);
+}
+
+void	get_tex_bonus(t_global *g, t_local *l)
+{
+	if (g->map[l->ray.map_y][l->ray.map_x] >= 10 && \
+			g->map[l->ray.map_y][l->ray.map_x] < 20)
+	{
+		l->t_type = 0;
+		l->t_id = g->map[l->ray.map_y][l->ray.map_x] - 10;
+	}
+	else if (g->map[l->ray.map_y][l->ray.map_x] >= 20 && \
+			g->map[l->ray.map_y][l->ray.map_x] < 30)
+	{
+		l->t_type = 1;
+		l->t_id = g->map[l->ray.map_y][l->ray.map_x] - 20;
+	}
+	else if (g->map[l->ray.map_y][l->ray.map_x] >= 30 && \
+			g->map[l->ray.map_y][l->ray.map_x] < 40)
+	{
+		l->t_type = 2;
+		l->t_id = g->map[l->ray.map_y][l->ray.map_x] - 30;
+	}
+}

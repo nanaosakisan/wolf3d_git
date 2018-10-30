@@ -12,13 +12,13 @@
 
 #include "../includes/wolf_3d.h"
 
-int		check_borders(int **map, t_point start, int current_x, int current_y)
+static int	check_borders(int **map, t_point start, int current_x, int current_y)
 {
-	if (!(map[current_y][current_x]))
+	if (!(map[current_y][current_x]) || map[current_y][current_x] < 10)
 		return (1);
-	if (map[current_y][current_x] > 1)
+	if (map[current_y][current_x] > 19 || map[current_y][current_x] == 'X')
 		return (0);
-	map[current_y][current_x] = 0;
+	map[current_y][current_x] = 'X';
 	return (check_borders(map, start, current_x, current_y - 1)
 			|| check_borders(map, start, current_x - 1, current_y)
 			|| check_borders(map, start, current_x, current_y + 1)
@@ -30,23 +30,28 @@ void	check_start_pos(t_global *g)
 	t_point		start;
 	int			**tmp;
 	int			i;
+	int			j;
 
-	start.x = g->player.pos_x;
-	start.y = g->player.pos_y;
-	if (g->map[start.y][start.x] == 0)
+	start.x = (int)g->player.pos_x;
+	start.y = (int)g->player.pos_y;
+	if (g->map[start.y][start.x] < 10)
 		error("Error : player spawn outside the map.");
-	if (g->map[start.y][start.x] > 1)
+	if (g->map[start.y][start.x] > 19)
 		error("Error : player spawn in a wall.");
-	tmp = (int**)malloc(sizeof(int*) + 1);
-	i = -1;
-	while (g->map[++i])
-		ft_memcpy(tmp, g->map[i], g->max_y);
-	tmp[i] = NULL;
+	if (!(tmp = (int**)malloc(sizeof(int*) * g->max_y)))
+		error("Error : malloc failed");
+	j = -1;
+	while (++j < g->max_y)
+	{
+		i = -1;
+		if (!(tmp[j] = malloc(sizeof(int) * g->max_x)))
+			error("Error : malloc failed");
+		while (++i < g->max_x)
+			tmp[j][i] = g->map[j][i];
+	}
 	if (check_borders(tmp, start, start.x, start.y))
-		error("Error : player spawn outside the map.");
-	while (i > -1)
-		free(tmp[i--]);
-	free(tmp);
+		error("Error : player spawn outside the map (or 0 in the map).");
+	free_tmp(tmp, i);
 }
 
 void	init_player(t_global *g, char *line)
@@ -86,7 +91,7 @@ int		check_lines(char **line)
 	while ((*line)[++i])
 	{
 		if ((*line)[i] != ' ' && (*line)[i] != '\t')
-			if (((*line)[i] < '0' || (*line)[i] > '9') && (*line)[i] != '-')
+			if (((*line)[i] < '0' || (*line)[i] > '9'))
 				return (0);
 	}
 	return (1);
@@ -98,11 +103,10 @@ int		check_map(t_global *g)
 	char	*line;
 
 	if (!(g->fd = open(g->name, O_RDONLY)))
-		error("Error : coudn't open map.");
+		error("Error : couldn't open map.");
 	line = NULL;
 	if ((ret = get_next_line(g->fd, &line)) < 0)
 		error("Error : map file invalid.");
-	init_player(g, line);
 	ft_strdel(&line);
 	g->max_y = 0;
 	while ((ret = get_next_line(g->fd, &line)) > 0)

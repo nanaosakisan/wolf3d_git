@@ -18,6 +18,7 @@ SRC_NAME =	aux.c				\
 			draw.c				\
 			init_struct.c		\
 			key_hook.c			\
+			key_hook_2.c		\
 			main.c				\
 			mini_map.c			\
 			raycasting_loop.c

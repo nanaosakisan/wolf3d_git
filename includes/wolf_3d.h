@@ -16,7 +16,6 @@
 # include "../libft/include/libft.h"
 # include "../minilibx_macos/mlx.h"
 # include <math.h>
-# include <stdio.h>
 # include <pthread.h>
 
 # define WIDTH 1600
@@ -154,15 +153,20 @@ int					check_map(t_global *g);
 void				check_start_pos(t_global *g);
 int					deal_key(int key, t_global *global);
 int					deal_key_release(int key, t_global *g);
+void				free_tmp(int **tmp, int i);
 char				*get_path(int i, char *type);
+void				get_tex_bonus(t_global *g, t_local *l);
 int					get_thread_id(pthread_t id, pthread_t *thread);
-void				init_map(t_global *g);
 void				init_global(t_global *g);
+void				init_map(t_global *g);
+void				init_player(t_global *g, char *line);
 void				mlx_pixel_put_to_image(t_global *global, int x, int y, \
 																	int color);
 void				launch_mini_map(t_global *global);
 void				set_coord(t_global *g, t_local *l, int x);
 void				texture(t_global *global);
 void				update_input(t_global *g);
+
+
 
 #endif
