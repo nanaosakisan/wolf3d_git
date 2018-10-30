@@ -6,39 +6,11 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/30 17:53:25 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/10/26 11:46:30 by arusso           ###   ########.fr       */
+/*   Updated: 2018/10/30 14:53:25 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf_3d.h"
-
-static void	get_texture(t_global *g, int i, char *path, char *type)
-{
-	if (ft_strequ(type, "wall"))
-	{
-		if (!(g->tex[1][i].p_img = mlx_xpm_file_to_image(g->mlx, path, \
-											&g->tex[1][i].x, &g->tex[1][i].y)))
-			error("Error : no texture found for wall.");
-		g->tex[1][i].data = (unsigned int*)mlx_get_data_addr(g->tex[1]\
-		[i].p_img, &g->tex[1][i].bpp, &g->tex[1][i].size, &g->tex[1][i].endian);
-	}
-	else if (ft_strequ(type, "floor"))
-	{
-		if (!(g->tex[0][i].p_img = mlx_xpm_file_to_image(g->mlx, path, \
-						&g->tex[0][i].x, &g->tex[0][i].y)))
-			error("Error : no texture found for floor.");
-		g->tex[0][i].data = (unsigned int*)mlx_get_data_addr(g->tex[0]\
-		[i].p_img, &g->tex[0][i].bpp, &g->tex[0][i].size, &g->tex[0][i].endian);
-	}
-	else
-	{
-		if (!(g->tex[2][i].p_img = mlx_xpm_file_to_image(g->mlx, path, \
-											&g->tex[2][i].x, &g->tex[2][i].y)))
-			error("Error : no texture found for ceiling.");
-		g->tex[2][i].data = (unsigned int*)mlx_get_data_addr(g->tex[2]\
-		[i].p_img, &g->tex[2][i].bpp, &g->tex[2][i].size, &g->tex[2][i].endian);
-	}
-}
 
 static void	init_textures(t_global *g)
 {
@@ -68,25 +40,6 @@ static void	init_textures(t_global *g)
 	}
 }
 
-void		test_texture_map(t_global *g)
-{
-	int		i;
-	int		j;
-
-	j = -1;
-	while (++j < g->max_y)
-	{
-		i = -1;
-		while (++i < g->max_x)
-		{
-			// printf("map[j][i] = %d, max_x = %d, max_y =%d\n", g->map[j][i], g->max_x, g->max_y);
-			if ((g->map[j][i] > 10 + NB_FLOOR - 1 && g->map[j][i] < 20)
-					|| (g->map[j][i] > 20 + NB_WALL - 1))
-				error("Error : texture doesn't exist.");
-		}
-	}
-}
-
 void		init_global(t_global *g)
 {
 	int		i;
@@ -110,7 +63,6 @@ char		**load_map(t_global *g)
 	line = NULL;
 	if ((ret = get_next_line(g->fd, &line)) < 0)
 		error("Error : map file invalid.");
-	init_player(g, line);
 	ft_strdel(&line);
 	i = 0;
 	if (!(dest = (char**)malloc(sizeof(char*) * g->max_y + 1)))
@@ -118,7 +70,7 @@ char		**load_map(t_global *g)
 	while ((ret = get_next_line(g->fd, &line)))
 	{
 		if (ret == -1)
-			error("Error : loading map failed.");
+			error("Nope.");
 		dest[i] = ft_strdup(line);
 		ft_strdel(&line);
 		i++;
@@ -126,6 +78,24 @@ char		**load_map(t_global *g)
 	dest[i] = NULL;
 	close(g->fd);
 	return (dest);
+}
+
+void		check_tex(t_global *g)
+{
+	int	i;
+	int	j;
+
+	j = -1;
+	while (++j < g->max_y)
+	{
+		i = -1;
+		while (++i < g->max_x)
+		{
+			if ((g->map[j][i] > 10 + NB_FLOOR - 1 && g->map[j][i] < 20)\
+					|| (g->map[j][i] > 20 + NB_WALL - 1))
+				error("Error : texture doesn't exist.");
+		}
+	}
 }
 
 void		init_map(t_global *g)
@@ -137,13 +107,13 @@ void		init_map(t_global *g)
 	c_map = load_map(g);
 	g->max_x = count_word((const char*)c_map[0], ' ');
 	if (!(g->map = (int**)malloc(sizeof(int*) * ft_tablen(c_map) + 1)))
-		error("Error : malloc failed.");
+		error("0");
 	len_tab = ft_tablen(c_map);
 	i = 0;
 	while (i != len_tab)
 	{
 		if (!(g->map[i] = ft_splitoa(c_map[i], ' ')))
-			error("Error : parsing failed.");
+			error("0");
 		i++;
 	}
 	g->map[i] = NULL;
@@ -151,6 +121,6 @@ void		init_map(t_global *g)
 	while (c_map[++i])
 		free(c_map[i]);
 	free(c_map);
-	// check_start_pos(g);
-	// test_texture_map(g);
+	check_start_pos(g);
+	check_tex(g);
 }

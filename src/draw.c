@@ -32,16 +32,20 @@ static void	get_tex(t_global *g, t_local *l)
 
 static void	draw_wall(float *start, float *end, t_global *g, t_local *l)
 {
-	int	y;
+	int				y;
 
+	l->t_type = 0;
+	l->t_id = 0;
 	get_tex(g, l);
+	if (!(g->tex[l->t_type][l->t_id].p_img))
+		error("Error : texture doesn't exists.");
 	l->wall_x = (l->side == 0 ? \
 			l->ray.w_dist * l->ray.dir_y + g->player.pos_y \
 			: l->ray.w_dist * l->ray.dir_x + g->player.pos_x);
 	l->wall_x -= floor(l->wall_x);
 	l->t_x = (int)(l->wall_x * (double)(g->tex[l->t_type][l->t_id].x));
-	if ((l->side == 0 && l->ray.dir_x > 0) || (l->side == 1 && \
-															l->ray.dir_y < 0))
+	if ((l->side == 0 && l->ray.dir_x > 0) \
+			|| (l->side == 1 && l->ray.dir_y < 0))
 		l->t_x = g->tex[l->t_type][l->t_id].x - l->t_x - 1;
 	y = start[0] - 1;
 	while (++y < end[0])
@@ -63,8 +67,8 @@ static void	loop_floor_ceiling(float *end, t_global *g, t_local *l, int y)
 																g->player.pos_y;
 	l->t_x = (int)(l->cur_x * g->tex[0][0].x) % g->tex[0][0].x;
 	l->t_y = (int)(l->cur_y * g->tex[0][0].y) % g->tex[0][0].y;
-	((int*)g->data)[(int)(end[1] + y * WIDTH)] = g->tex[0][0].data[l->t_x + \
-													(l->t_y * g->tex[0][0].x)];
+	((int*)g->data)[(int)(end[1] + y * WIDTH)] = \
+						g->tex[0][0].data[l->t_x + (l->t_y * g->tex[0][0].x)];
 	l->t_x = (int)(l->cur_x * g->tex[2][0].x) % g->tex[2][0].x;
 	l->t_y = (int)(l->cur_y * g->tex[2][0].y) % g->tex[2][0].y;
 	((int*)g->data)[(int)(end[1] + (HEIGHT - y) * WIDTH)] = \

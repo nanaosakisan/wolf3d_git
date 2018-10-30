@@ -6,7 +6,7 @@
 /*   By: iporsenn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 17:26:24 by iporsenn          #+#    #+#             */
-/*   Updated: 2018/10/27 15:44:55 by iporsenn         ###   ########.fr       */
+/*   Updated: 2018/10/30 13:14:51 by arusso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int			main(int ac, char **av)
 	t_global	*g;
 
 	if (ac != 2)
-		error("Error : please enter a map file name.\n./wolf3d map_file.txt");
+		error("Error : please enter a map file name.\n.
+													/wolf3d map_file.w3d/txt");
 	if (!(g = (t_global*)malloc(sizeof(t_global))))
 		error("Error : malloc failed.");
 	g->name = av[1];

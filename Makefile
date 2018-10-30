@@ -13,12 +13,12 @@
 NAME = wolf3d
 
 SRC_PATH = src/
-SRC_NAME =	aux.c				\
+SRC_NAME =	born_to_norm.c		\
 			check_map.c			\
 			draw.c				\
 			init_struct.c		\
+			input.c				\
 			key_hook.c			\
-			key_hook_2.c		\
 			main.c				\
 			mini_map.c			\
 			raycasting_loop.c

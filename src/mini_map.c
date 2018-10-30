@@ -29,6 +29,23 @@ static void	draw_white_square(int x, int y, t_global *g)
 	}
 }
 
+static void	draw_transparente_square(int x, int y, t_global *g)
+{
+	int i;
+	int len_x;
+	int	len_y;
+
+	len_x = x + SQUARE;
+	len_y = y + SQUARE;
+	while (x < WIDTH / 4 && x <= len_x)
+	{
+		i = y - 1;
+		while (++i <= HEIGHT / 4 && i <= len_y)
+			((int*)g->mini_map.data)[(int)(x + i * WIDTH / 4)] = 0xFFFFFFFF;
+		x++;
+	}
+}
+
 static void	draw_player(t_global *g, int x, int y)
 {
 	float	i;
@@ -52,6 +69,8 @@ static void	loop_draw(int i, int j, t_global *g)
 {
 	if ((g->map[j][i] >= 20) && (g->map[j][i] <= 29))
 		draw_white_square(i * SQUARE, j * SQUARE, g);
+	else
+		draw_transparente_square(i * SQUARE, j * SQUARE, g);
 	if (i == (int)g->player.pos_x && j == (int)g->player.pos_y)
 		draw_player(g, i, j);
 }
