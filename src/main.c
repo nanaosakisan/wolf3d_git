@@ -26,7 +26,7 @@ int			main(int ac, char **av)
 	t_global	*g;
 
 	if (ac != 2)
-		error("Error : please enter a map file name.\n.
+		error("Error : please enter a map file name.\n.\
 													/wolf3d map_file.w3d/txt");
 	if (!(g = (t_global*)malloc(sizeof(t_global))))
 		error("Error : malloc failed.");

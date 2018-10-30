@@ -25,8 +25,8 @@ SRC_NAME =	born_to_norm.c		\
 
 SRC =  $(addprefix $(SRC_PATH), $(SRC_NAME))
 
-INCLUDE_PATH = ./
-INCLUDE_NAME =
+INCLUDE_PATH = includes/
+INCLUDE_NAME = wolf_3d.h
 INCLUDE = $(addprefix $(INCLUDE_PATH), $(INCLUDE_NAME))
 
 OBJ_PATH = obj/
@@ -44,7 +44,7 @@ FLAGS_LIBX = -lmlx -framework OpenGL -framework AppKit -lpthread -D_REENTRANT
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(INCLUDE)
 	@make -C libft
 	@gcc $(FLAGS) $(FLAGS_LIBX) $(SRC) ./libft/libft.a $(HEADER) -o $(NAME)
 	@echo "\033[32mExe built\033[0m"
