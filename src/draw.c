@@ -39,7 +39,6 @@ static void	draw_wall(float *start, float *end, t_global *g, t_local *l)
 	get_tex(g, l);
 	if (!(g->tex[l->t_type][l->t_id].p_img))
 		error("Error : texture doesn't exists.");
-	// printf("t_type = %d, t_id = %d\n", l->t_type, l->t_id);
 	l->wall_x = (l->side == 0 ? \
 			l->ray.w_dist * l->ray.dir_y + g->player.pos_y \
 			: l->ray.w_dist * l->ray.dir_x + g->player.pos_x);

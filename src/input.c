@@ -50,25 +50,25 @@ static int	move_right(t_global *g)
 
 static int	move_up(t_global *g)
 {
-	if ((g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed)]\
-		[(int)(g->player.pos_x + g->player.dir_x * g->player.speed * 2)] < 20)\
+	if ((g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed * 4)]\
+		[(int)(g->player.pos_x + g->player.dir_x * g->player.speed * 4)] < 20)\
 		&& (g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed)]\
-		[(int)(g->player.pos_x + g->player.dir_x * g->player.speed * 2)] > 9))
+		[(int)(g->player.pos_x + g->player.dir_x * g->player.speed * 4)] > 9))
 		g->player.pos_x += g->player.dir_x * g->player.speed;
-	if ((g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed * 2)]\
+	if ((g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed * 4)]\
 		[(int)(g->player.pos_x + g->player.dir_x * g->player.speed)] < 20) &&\
-		(g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed * 2)]\
-		[(int)(g->player.pos_x + g->player.dir_x * g->player.speed)] > 9))
+		(g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed * 4)]\
+		[(int)(g->player.pos_x + g->player.dir_x * g->player.speed * 4)] > 9))
 		g->player.pos_y += g->player.dir_y * g->player.speed;
 	return (1);
 }
 
 static int	move_down(t_global *g)
 {
-	if (g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed)][(int)(g->player.pos_x \
-				- g->player.dir_x * g->player.speed * 2)] <= 19)
+	if (g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed)]\
+		[(int)(g->player.pos_x - g->player.dir_x * g->player.speed * 4)] <= 19)
 		g->player.pos_x -= g->player.dir_x * g->player.speed;
-	if (g->map[(int)(g->player.pos_y - g->player.dir_y * g->player.speed * 2)]\
+	if (g->map[(int)(g->player.pos_y - g->player.dir_y * g->player.speed * 4)]\
 			[(int)(g->player.pos_x + g->player.dir_x * g->player.speed)] <= 19)
 		g->player.pos_y -= g->player.dir_y * g->player.speed;
 	return (1);
