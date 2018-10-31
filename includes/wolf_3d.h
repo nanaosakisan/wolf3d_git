@@ -18,6 +18,7 @@
 # include <math.h>
 # include <stdio.h>
 # include <pthread.h>
+# include <signal.h>
 
 # define WIDTH 1600
 # define HEIGHT 900

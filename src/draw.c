@@ -39,6 +39,7 @@ static void	draw_wall(float *start, float *end, t_global *g, t_local *l)
 	get_tex(g, l);
 	if (!(g->tex[l->t_type][l->t_id].p_img))
 		error("Error : texture doesn't exists.");
+	// printf("t_type = %d, t_id = %d\n", l->t_type, l->t_id);
 	l->wall_x = (l->side == 0 ? \
 			l->ray.w_dist * l->ray.dir_y + g->player.pos_y \
 			: l->ray.w_dist * l->ray.dir_x + g->player.pos_x);
@@ -71,7 +72,7 @@ static void	loop_floor_ceiling(float *end, t_global *g, t_local *l, int y)
 						g->tex[0][0].data[l->t_x + (l->t_y * g->tex[0][0].x)];
 	l->t_x = (int)(l->cur_x * g->tex[2][0].x) % g->tex[2][0].x;
 	l->t_y = (int)(l->cur_y * g->tex[2][0].y) % g->tex[2][0].y;
-	((int*)g->data)[(int)(end[1] + (HEIGHT - y) * WIDTH)] = \
+	((int*)g->data)[(int)(end[1] + (HEIGHT - y - 1) * WIDTH)] = \
 						g->tex[2][0].data[l->t_x + (l->t_y * g->tex[2][0].x)];
 }
 
@@ -104,7 +105,7 @@ void		set_coord(t_global *g, t_local *l, int x)
 		(l->ray.map_x - g->player.pos_x + (1 - l->step_x) / 2) / l->ray.dir_x \
 		: (l->ray.map_y - g->player.pos_y + (1 - l->step_y) / 2) / l->ray.dir_y;
 	l->line_height = (int)(HEIGHT / l->ray.w_dist);
-	start[0] = (float)(-l->line_height / 2 + HEIGHT / 2);
+	start[0] = (float)(-l->line_height / 2 + HEIGHT / 2 - 1);
 	start[0] = (start[0] < 0) ? 0 : start[0];
 	end[0] = (float)(l->line_height / 2 + HEIGHT / 2);
 	end[0] = (end[0] >= HEIGHT) ? HEIGHT - 1 : end[0];

@@ -12,17 +12,19 @@
 
 #include "../includes/wolf_3d.h"
 
-static int	check_borders(int **map, t_point start, int cur_x, int cur_y)
+static int	check_borders(int **map, t_global *g, int cur_x, int cur_y)
 {
-	if (!(map[cur_y][cur_x]) || map[cur_y][cur_x] < 10)
+	if (cur_x >= g->max_x || cur_x < 0 || cur_y >= g->max_y || cur_y < 0 \
+													|| map[cur_y][cur_x] < 10)
 		return (1);
 	if (map[cur_y][cur_x] > 19)
 		return (0);
 	map[cur_y][cur_x] = 99;
-	return (check_borders(map, start, cur_x, cur_y - 1)
-			|| check_borders(map, start, cur_x - 1, cur_y)
-			|| check_borders(map, start, cur_x, cur_y + 1)
-			|| check_borders(map, start, cur_x + 1, cur_y));
+	printf("x = %d, y = %d\n", cur_x, cur_y);
+	return (check_borders(map, g, cur_x, cur_y - 1)
+			|| check_borders(map, g, cur_x - 1, cur_y)
+			|| check_borders(map, g, cur_x, cur_y + 1)
+			|| check_borders(map, g, cur_x + 1, cur_y));
 }
 
 void		check_start_pos(t_global *g)
@@ -49,7 +51,7 @@ void		check_start_pos(t_global *g)
 		while (++i < g->max_x)
 			tmp[j][i] = g->map[j][i];
 	}
-	if (check_borders(tmp, start, start.x, start.y))
+	if (check_borders(tmp, g, start.x, start.y))
 		error("Error : invalid map.");
 	free_tmp(tmp, g->max_y);
 }
