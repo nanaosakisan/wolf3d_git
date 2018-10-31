@@ -53,7 +53,7 @@ void		init_global(t_global *g)
 	init_textures(g);
 }
 
-char		**load_map(t_global *g)
+static char	**load_map(t_global *g)
 {
 	char	**dest;
 	char	*line;
@@ -80,7 +80,7 @@ char		**load_map(t_global *g)
 	return (dest);
 }
 
-void		check_tex(t_global *g)
+static void	check_tex(t_global *g)
 {
 	int	i;
 	int	j;
