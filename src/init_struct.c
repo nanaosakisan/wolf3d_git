@@ -70,7 +70,7 @@ static char	**load_map(t_global *g)
 	while ((ret = get_next_line(g->fd, &line)))
 	{
 		if (ret == -1)
-			error("Nope.");
+			error("Error : parsing failed.");
 		dest[i] = ft_strdup(line);
 		ft_strdel(&line);
 		i++;
@@ -107,13 +107,13 @@ void		init_map(t_global *g)
 	c_map = load_map(g);
 	g->max_x = count_word((const char*)c_map[0], ' ');
 	if (!(g->map = (int**)malloc(sizeof(int*) * ft_tablen(c_map) + 1)))
-		error("0");
+		error("Error : malloc failed.");
 	len_tab = ft_tablen(c_map);
 	i = 0;
 	while (i != len_tab)
 	{
 		if (!(g->map[i] = ft_splitoa(c_map[i], ' ')))
-			error("0");
+			error("Error : parsing failed.");
 		i++;
 	}
 	g->map[i] = NULL;
