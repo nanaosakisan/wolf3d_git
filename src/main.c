@@ -12,7 +12,7 @@
 
 #include "../includes/wolf_3d.h"
 
-static void intHandler(int k)
+static void	int_handler(int k)
 {
 	k = 0;
 	system("killall afplay");
@@ -33,7 +33,6 @@ int			main(int ac, char **av)
 	t_global			*g;
 	static volatile int	k;
 
-
 	if (ac != 2)
 		error("Error : please enter a map file name.\n.\
 													/wolf3d map_file.w3d/txt");
@@ -45,7 +44,7 @@ int			main(int ac, char **av)
 	init_global(g);
 	init_map(g);
 	k = 1;
-	signal(SIGINT, intHandler);
+	signal(SIGINT, int_handler);
 	while (k)
 	{
 		system("afplay ./sounds/hush.mp3 &");

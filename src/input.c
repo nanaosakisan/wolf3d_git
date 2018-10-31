@@ -50,26 +50,30 @@ static int	move_right(t_global *g)
 
 static int	move_up(t_global *g)
 {
-	if ((g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed * 4)]\
-		[(int)(g->player.pos_x + g->player.dir_x * g->player.speed * 4)] < 20)\
-		&& (g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed)]\
-		[(int)(g->player.pos_x + g->player.dir_x * g->player.speed * 4)] > 9))
+	if (g->map[(int)(g->player.pos_y)][(int)(g->player.pos_x \
+			+ g->player.dir_x * 0.25)] <= 19 &&
+			g->map[(int)(g->player.pos_y)][(int)(g->player.pos_x \
+			+ g->player.dir_x * 0.25)] > 9)
 		g->player.pos_x += g->player.dir_x * g->player.speed;
-	if ((g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed * 4)]\
-		[(int)(g->player.pos_x + g->player.dir_x * g->player.speed)] < 20) &&\
-		(g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed * 4)]\
-		[(int)(g->player.pos_x + g->player.dir_x * g->player.speed * 4)] > 9))
+	if ((g->map[(int)(g->player.pos_y + g->player.dir_y * 0.25)]\
+			[(int)(g->player.pos_x)] <= 19) && (g->map[(int)(g->player.pos_y +\
+			g->player.dir_y * 0.25)]\
+			[(int)(g->player.pos_x)] > 9))
 		g->player.pos_y += g->player.dir_y * g->player.speed;
 	return (1);
 }
 
 static int	move_down(t_global *g)
 {
-	if (g->map[(int)(g->player.pos_y + g->player.dir_y * g->player.speed)]\
-		[(int)(g->player.pos_x - g->player.dir_x * g->player.speed * 4)] <= 19)
+	if (g->map[(int)(g->player.pos_y)][(int)(g->player.pos_x - \
+					g->player.dir_x * 0.25)] <= 19 && \
+					g->map[(int)(g->player.pos_y)][(int)(g->player.pos_x - \
+					g->player.dir_x * 0.25)] > 9)
 		g->player.pos_x -= g->player.dir_x * g->player.speed;
-	if (g->map[(int)(g->player.pos_y - g->player.dir_y * g->player.speed * 4)]\
-			[(int)(g->player.pos_x + g->player.dir_x * g->player.speed)] <= 19)
+	if (g->map[(int)(g->player.pos_y - g->player.dir_y * 0.25)]\
+					[(int)(g->player.pos_x)] <= 19 && \
+					g->map[(int)(g->player.pos_y -\
+					g->player.dir_y * 0.25)][(int)(g->player.pos_x)] > 9)
 		g->player.pos_y -= g->player.dir_y * g->player.speed;
 	return (1);
 }

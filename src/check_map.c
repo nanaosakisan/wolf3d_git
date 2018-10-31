@@ -20,7 +20,6 @@ static int	check_borders(int **map, t_global *g, int cur_x, int cur_y)
 	if (map[cur_y][cur_x] > 19)
 		return (0);
 	map[cur_y][cur_x] = 99;
-	printf("x = %d, y = %d\n", cur_x, cur_y);
 	return (check_borders(map, g, cur_x, cur_y - 1)
 			|| check_borders(map, g, cur_x - 1, cur_y)
 			|| check_borders(map, g, cur_x, cur_y + 1)
@@ -73,7 +72,7 @@ static void	init_player(t_global *g, char *line)
 	g->player.plane_x = 0;
 	g->player.plane_y = 0.66;
 	g->player.rot = 0.021;
-	g->player.speed = 0.05;
+	g->player.speed = 0.04;
 }
 
 static int	check_lines(char **line)
